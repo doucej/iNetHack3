@@ -24,6 +24,10 @@ extern const char *enc_stat[]; /* encumbrance status from botl.c */
 #if defined(SYSV) || defined(DGUX) || defined(HPUX)
 #define NR_OF_EOFS 20
 #endif
+
+#if TARGET_OS_IPHONE
+extern boolean winiphone_autokick;
+extern boolean winiphone_travel;
 #endif
 
 #define CMD_TRAVEL (char) 0x90
@@ -4954,10 +4958,20 @@ int x, y, mod;
         if (abs(x) <= 1 && abs(y) <= 1) {
             x = sgn(x), y = sgn(y);
         } else {
-            u.tx = u.ux + x;
-            u.ty = u.uy + y;
-            cmd[0] = Cmd.spkeys[NHKF_TRAVEL];
-            return cmd;
+	  //            u.tx = u.ux + x;
+	  //            u.ty = u.uy + y;
+	  //            cmd[0] = Cmd.spkeys[NHKF_TRAVEL];
+	  //            return cmd;
+            if (winiphone_travel) {
+                u.tx = u.ux+x;
+                u.ty = u.uy+y;
+                cmd[0] = CMD_TRAVEL;
+                return cmd;
+            } else {
+                //do nothing
+                cmd[0] = 0;
+                return cmd;
+            }
         }
 
         if (x == 0 && y == 0) {
