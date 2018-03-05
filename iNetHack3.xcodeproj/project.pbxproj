@@ -632,6 +632,7 @@
 		C1A1DE2A2037D16000D4C8BA /* posixregex.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE282037D15F00D4C8BA /* posixregex.c */; };
 		C1A1DE2C2037D39800D4C8BA /* sys.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE2B2037D39800D4C8BA /* sys.c */; };
 		C1A1DE2D2037D39800D4C8BA /* sys.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE2B2037D39800D4C8BA /* sys.c */; };
+		C1D5E2E3204C145F00D32EBB /* bogusmon in Resources */ = {isa = PBXBuildFile; fileRef = C1D5E2E2204C145F00D32EBB /* bogusmon */; };
 		FB33C48B1A7F774A0020F638 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = FB33C48A1A7F774A0020F638 /* dawnhack32.png */; };
 		FB4307201A72A0D7003B7010 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB43071F1A72A0D6003B7010 /* Images.xcassets */; };
 		FB64D9551A785ED80035BA74 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FB64D9541A785ED80035BA74 /* Icon.png */; };
@@ -1098,6 +1099,7 @@
 		C12F9861202F60C900F296F6 /* iNetHack2 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iNetHack2 copy-Info.plist"; path = "/Users/doucej/Documents/iNetHack3/iNetHack2 copy-Info.plist"; sourceTree = "<absolute>"; };
 		C1A1DE282037D15F00D4C8BA /* posixregex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = posixregex.c; path = nethack/sys/share/posixregex.c; sourceTree = "<group>"; };
 		C1A1DE2B2037D39800D4C8BA /* sys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys.c; path = nethack/src/sys.c; sourceTree = "<group>"; };
+		C1D5E2E2204C145F00D32EBB /* bogusmon */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bogusmon; sourceTree = "<group>"; };
 		FB33C48A1A7F774A0020F638 /* dawnhack32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dawnhack32.png; sourceTree = "<group>"; };
 		FB43071F1A72A0D6003B7010 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iNetHack2/Images.xcassets; sourceTree = "<group>"; };
 		FB64D9541A785ED80035BA74 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1567,6 +1569,7 @@
 				43DD0A230FF4E0F700580249 /* Arc-fila.lev */,
 				43DD0A240FF4E0F700580249 /* Arc-filb.lev */,
 				43DD0A250FF4E0F700580249 /* Arc-goal.lev */,
+				C1D5E2E2204C145F00D32EBB /* bogusmon */,
 				43DD0A260FF4E0F700580249 /* Arc-loca.lev */,
 				43DD0A270FF4E0F700580249 /* Arc-strt.lev */,
 				43DD0A290FF4E0F700580249 /* asmodeus.lev */,
@@ -2021,6 +2024,7 @@
 				439F0ED4100210770050AED4 /* ExtendedCommandView.xib in Resources */,
 				43D1142B10074E9F00082C8D /* news in Resources */,
 				431FD068100B598200DC7260 /* Settings.bundle in Resources */,
+				C1D5E2E3204C145F00D32EBB /* bogusmon in Resources */,
 				916CE038102C57E8000535FC /* credits.html in Resources */,
 				43A7B1CA103046EA0083CE1B /* petmark.png in Resources */,
 				435C0D7A10342A490007613E /* manual.html in Resources */,

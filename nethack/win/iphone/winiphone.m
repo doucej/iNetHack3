@@ -279,12 +279,6 @@ void iphone_putstr(winid wid, int attr, const char *text) {
 	[w putString:text];
 }
 
-void iphone_putmixed(winid wid, int attr, const char *text) {
-    //NSLog(@"iphone_putstr %d %s", wid, text);
-    Window *w = [[MainViewController instance] windowWithId:wid];
-    [w putString:text];
-}
-
 void iphone_display_file(const char *filename, BOOLEAN_P must_exist) {
 	//NSLog(@"iphone_display_file %s", filename);
 	[[MainViewController instance] displayFile:[NSString stringWithCString:filename encoding:NSASCIIStringEncoding]
