@@ -119,6 +119,7 @@
 			<string>tileset</string>
 			<key>Titles</key>
 			<array>
+				<string>Nethack Modern</string>
 				<string>Absurd</string>
 				<string>Abigaba Chozo</string>
 				<string>Abigaba Chozo B</string>
@@ -133,6 +134,7 @@
 			</array>
 			<key>Values</key>
 			<array>
+				<string>nethackmodern</string>
 				<string>absurd32</string>
 				<string>chozo32</string>
 				<string>chozo32b</string>

@@ -100,6 +100,12 @@
             if (tileSize.width > 30) {
                 tileSize = CGSizeMake(30,30);
             }
+        } else if ([tilesetName isEqualToString:@"nethackmodern"]) {
+            tilesetTileSize = CGSizeMake(32,32);
+            maxTileSize = CGSizeMake(32,32);
+            if (tileSize.width > 32) {
+                tileSize = CGSizeMake(32,32);
+            }
         }
         NSString *imgName = [NSString stringWithFormat:@"%@.png", tilesetName];
 		UIImage *tilesetImage = [UIImage imageNamed:imgName];

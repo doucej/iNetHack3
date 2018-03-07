@@ -628,6 +628,8 @@
 		C12F9859202F60C900F296F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		C12F985A202F60C900F296F6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9194B2AD1032E48A009BDE61 /* QuartzCore.framework */; };
 		C12F985B202F60C900F296F6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F3397810BD4C6F0054E1A9 /* SystemConfiguration.framework */; };
+		C172677D204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
+		C172677E204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
 		C1A1DE292037D16000D4C8BA /* posixregex.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE282037D15F00D4C8BA /* posixregex.c */; };
 		C1A1DE2A2037D16000D4C8BA /* posixregex.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE282037D15F00D4C8BA /* posixregex.c */; };
 		C1A1DE2C2037D39800D4C8BA /* sys.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE2B2037D39800D4C8BA /* sys.c */; };
@@ -1097,6 +1099,7 @@
 		C12F9712202F5F9F00F296F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C12F9860202F60C900F296F6 /* iNetHack3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iNetHack3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12F9861202F60C900F296F6 /* iNetHack2 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iNetHack2 copy-Info.plist"; path = "/Users/doucej/Documents/iNetHack3/iNetHack2 copy-Info.plist"; sourceTree = "<absolute>"; };
+		C172677C204F936000428522 /* nethackmodern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nethackmodern.png; sourceTree = "<group>"; };
 		C1A1DE282037D15F00D4C8BA /* posixregex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = posixregex.c; path = nethack/sys/share/posixregex.c; sourceTree = "<group>"; };
 		C1A1DE2B2037D39800D4C8BA /* sys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys.c; path = nethack/src/sys.c; sourceTree = "<group>"; };
 		C1D5E2E2204C145F00D32EBB /* bogusmon */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bogusmon; sourceTree = "<group>"; };
@@ -1301,6 +1304,7 @@
 		4394EB9510394C5F0053C8C2 /* Tilesets */ = {
 			isa = PBXGroup;
 			children = (
+				C172677C204F936000428522 /* nethackmodern.png */,
 				FBA6C9D81B47442C006C88B5 /* nevanda32.png */,
 				FBA6C9D91B47442C006C88B5 /* nevanda32black.png */,
 				FB33C48A1A7F774A0020F638 /* dawnhack32.png */,
@@ -1964,6 +1968,7 @@
 				43DD0B270FF4E0FC00580249 /* Ran-goal.lev in Resources */,
 				43DD0B280FF4E0FC00580249 /* Ran-loca.lev in Resources */,
 				43DD0B290FF4E0FC00580249 /* Ran-strt.lev in Resources */,
+				C172677D204F936000428522 /* nethackmodern.png in Resources */,
 				43DD0B2B0FF4E0FC00580249 /* Rog-fila.lev in Resources */,
 				FB4307201A72A0D7003B7010 /* Images.xcassets in Resources */,
 				43DD0B2C0FF4E0FC00580249 /* Rog-filb.lev in Resources */,
@@ -2176,6 +2181,7 @@
 				C12F9795202F60C800F296F6 /* soko4-1.lev in Resources */,
 				C12F9796202F60C800F296F6 /* soko4-2.lev in Resources */,
 				C12F9797202F60C800F296F6 /* spec_levs in Resources */,
+				C172677E204F936000428522 /* nethackmodern.png in Resources */,
 				C12F9798202F60C800F296F6 /* Tou-fila.lev in Resources */,
 				C12F9799202F60C800F296F6 /* Tou-filb.lev in Resources */,
 				C12F979A202F60C800F296F6 /* Tou-goal.lev in Resources */,
