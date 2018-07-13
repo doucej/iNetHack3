@@ -1,5 +1,6 @@
 /* NetHack 3.6	unixmain.c	$NHDT-Date: 1432512788 2015/05/25 00:13:08 $  $NHDT-Branch: master $:$NHDT-Revision: 1.52 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 /* main.c - Unix NetHack */
@@ -110,7 +111,15 @@ char *argv[];
         dir = nh_getenv("HACKDIR");
 
     if (argc > 1) {
-        if (!strncmp(argv[1], "-d", 2) && argv[1][2] != 'e') {
+        if (argcheck(argc, argv, ARG_VERSION) == 2)
+            exit(EXIT_SUCCESS);
+
+        if (argcheck(argc, argv, ARG_DEBUG) == 1) {
+            argc--;
+            argv++;
+	}
+
+        if (argc > 1 && !strncmp(argv[1], "-d", 2) && argv[1][2] != 'e') {
             /* avoid matching "-dec" for DECgraphics; since the man page
              * says -d directory, hope nobody's using -desomething_else
              */
@@ -719,5 +728,41 @@ get_login_name()
 
     return buf;
 }
+
+#ifdef __APPLE__
+extern int errno;
+
+void
+port_insert_pastebuf(buf)
+char *buf;
+{
+    /* This should be replaced when there is a Cocoa port. */
+    const char *errfmt;
+    size_t len;
+    FILE *PB = popen("/usr/bin/pbcopy","w");
+    if(!PB){
+	errfmt = "Unable to start pbcopy (%d)\n";
+	goto error;
+    }
+
+    len = strlen(buf);
+    /* Remove the trailing \n, carefully. */
+    if(buf[len-1] == '\n') len--;
+
+    /* XXX Sorry, I'm too lazy to write a loop for output this short. */
+    if(len!=fwrite(buf,1,len,PB)){
+	errfmt = "Error sending data to pbcopy (%d)\n";
+	goto error;
+    }
+
+    if(pclose(PB)!=-1){
+	return;
+    }
+    errfmt = "Error finishing pbcopy (%d)\n";
+
+error:
+    raw_printf(errfmt,strerror(errno));
+}
+#endif
 
 /*unixmain.c*/

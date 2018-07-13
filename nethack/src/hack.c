@@ -1,5 +1,6 @@
-/* NetHack 3.6	hack.c	$NHDT-Date: 1512771130 2017/12/08 22:12:10 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.181 $ */
+/* NetHack 3.6	hack.c	$NHDT-Date: 1518861490 2018/02/17 09:58:10 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.182 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Derek S. Ray, 2015. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -857,8 +858,11 @@ int mode;
 
     if (sobj_at(BOULDER, x, y) && (Sokoban || !Passes_walls)) {
         if (!(Blind || Hallucination) && (context.run >= 2)
-            && mode != TEST_TRAV)
+            && mode != TEST_TRAV) {
+            if (mode == DO_MOVE && iflags.mention_walls)
+                pline("A boulder blocks your path.");
             return FALSE;
+        }
         if (mode == DO_MOVE) {
             /* tunneling monsters will chew before pushing */
             if (tunnels(youmonst.data) && !needspick(youmonst.data)
@@ -1614,9 +1618,9 @@ domove()
         newsym(x, y);
         glyph = glyph_at(x, y); /* might have just changed */
 
-        if (boulder)
+        if (boulder) {
             Strcpy(buf, ansimpleoname(boulder));
-        else if (Underwater && !is_pool(x, y))
+        } else if (Underwater && !is_pool(x, y)) {
             /* Underwater, targetting non-water; the map just shows blank
                because you don't see remembered terrain while underwater;
                although the hero can attack an adjacent monster this way,
@@ -1624,21 +1628,20 @@ domove()
             Sprintf(buf, (Is_waterlevel(&u.uz) && levl[x][y].typ == AIR)
                              ? "an air bubble"
                              : "nothing");
-        else if (solid)
+        } else if (solid) {
             /* glyph might indicate unseen terrain if hero is blind;
                unlike searching, this won't reveal what that terrain is
                (except for solid rock, where the glyph would otherwise
                yield ludicrous "dark part of a room") */
-            Strcpy(buf,
-                   (levl[x][y].typ == STONE)
-                       ? "solid rock"
-                       : glyph_is_cmap(glyph)
+            Strcpy(buf, (levl[x][y].typ == STONE) ? "solid rock"
+                         : glyph_is_cmap(glyph)
                             ? the(defsyms[glyph_to_cmap(glyph)].explanation)
                             : (const char *) "an unknown obstacle");
-        /* note: 'solid' is misleadingly named and catches pools
-           of water and lava as well as rock and walls */
-        else
+            /* note: 'solid' is misleadingly named and catches pools
+               of water and lava as well as rock and walls */
+        } else {
             Strcpy(buf, "thin air");
+        }
         You("%s%s %s.",
             !(boulder || solid) ? "" : !explo ? "harmlessly " : "futilely ",
             explo ? "explode at" : "attack", buf);

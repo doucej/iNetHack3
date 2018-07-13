@@ -1,5 +1,6 @@
 /* NetHack 3.6	eat.c	$NHDT-Date: 1502754159 2017/08/14 23:42:39 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.179 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -1812,7 +1813,7 @@ struct obj *otmp;
             make_vomiting((long) rn1(context.victual.reqtime, 5), FALSE);
             break;
         }
-        /* else FALLTHRU */
+        /*FALLTHRU*/
     default:
         if (otmp->otyp == SLIME_MOLD && !otmp->cursed
             && otmp->spe == context.current_fruit) {

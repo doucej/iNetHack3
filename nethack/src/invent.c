@@ -1,5 +1,6 @@
-/* NetHack 3.6	invent.c	$NHDT-Date: 1518053384 2018/02/08 01:29:44 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.224 $ */
+/* NetHack 3.6	invent.c	$NHDT-Date: 1519672703 2018/02/26 19:18:23 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.225 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Derek S. Ray, 2015. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -598,6 +599,11 @@ struct obj *obj;
 
     /* fill empty quiver if obj was thrown */
     if (flags.pickup_thrown && !uquiver && obj_was_thrown
+        /* if Mjollnir is thrown and fails to return, we want to
+           auto-pick it when we move to its spot, but not into quiver;
+           aklyses behave like Mjollnir when thrown while wielded, but
+           we lack sufficient information here make them exceptions */
+        && obj->oartifact != ART_MJOLLNIR
         && (throwing_weapon(obj) || is_ammo(obj)))
         setuqwep(obj);
 added:
@@ -1588,7 +1594,7 @@ unsigned *resultflags;
     int oletct, iletct, unpaid, oc_of_sym;
     char sym, *ip, olets[MAXOCLASSES + 5], ilets[MAXOCLASSES + 10];
     char extra_removeables[3 + 1]; /* uwep,uswapwep,uquiver */
-    char buf[BUFSZ], qbuf[QBUFSZ];
+    char buf[BUFSZ] = DUMMY, qbuf[QBUFSZ];
 
     if (!invent) {
         You("have nothing to %s.", word);
@@ -1862,6 +1868,7 @@ nextclass:
         switch (sym) {
         case 'a':
             allflag = 1;
+            /*FALLTHRU*/
         case 'y':
             tmp = (*fn)(otmp);
             if (tmp < 0) {
@@ -1878,6 +1885,7 @@ nextclass:
             cnt += tmp;
             if (--mx == 0)
                 goto ret;
+            /*FALLTHRU*/
         case 'n':
             if (nodot)
                 dud++;

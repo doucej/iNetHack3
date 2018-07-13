@@ -11,7 +11,7 @@
  *              For "UNIX" select BSD, ULTRIX, SYSV, or HPUX in unixconf.h.
  *              A "VMS" option is not needed since the VMS C-compilers
  *              provide it (no need to change sec#1, vmsconf.h handles it).
- *              MacOSX uses the UNIX configruation, not the old MAC one.
+ *              MacOSX uses the UNIX configuration, not the old MAC one.
  */
 
 #define UNIX /* delete if no fork(), exec() available */
@@ -30,13 +30,12 @@
 /* #define ULTRIX_CC20 */
 /* define only if using cc v2.0 on a DECstation */
 /* #define ULTRIX_PROTO */
-			/* define for Ultrix 4.0 (or higher) on a DECstation;
-			 * if you get compiler errors, don't define this. */
-			/* Hint: if you're not developing code, don't define
-			   ULTRIX_PROTO. */
+/* define for Ultrix 4.0 (or higher) on a DECstation;
+ * if you get compiler errors, don't define this. */
+/* Hint: if you're not developing code, don't define
+   ULTRIX_PROTO. */
 
-#include "config1.h"	/* should auto-detect MSDOS, MAC, AMIGA, and WIN32 */
-
+#include "config1.h" /* should auto-detect MSDOS, MAC, AMIGA, and WIN32 */
 
 /* Windowing systems...
  * Define all of those you want supported in your binary.
@@ -497,6 +496,11 @@ typedef unsigned char uchar;
    but it isn't necessary for successful operation of the program */
 #define FREE_ALL_MEMORY             /* free all memory at exit */
 
+/* EDIT_GETLIN makes the string input in TTY, Qt4, and X11
+   so some prompts will remember the previously input text
+   (within the same session) */
+/* #define EDIT_GETLIN */
+
 /* #define DUMPLOG */  /* End-of-game dump logs */
 #ifdef DUMPLOG
 
@@ -508,7 +512,7 @@ typedef unsigned char uchar;
 #define DUMPLOG_FILE        "/tmp/nethack.%n.%d.log"
 /* DUMPLOG_FILE allows following placeholders:
    %% literal '%'
-   %v version (eg. "3.6.1-0")
+   %v version (eg. "3.6.2-0")
    %u game UID
    %t game start time, UNIX timestamp format
    %T current time, UNIX timestamp format

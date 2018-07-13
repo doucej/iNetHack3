@@ -1,5 +1,6 @@
 /* NetHack 3.6	mhitu.c	$NHDT-Date: 1513297347 2017/12/15 00:22:27 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.149 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -972,6 +973,7 @@ register struct attack *mattk;
             struct obj *otmp = mon_currwep;
 
             if (mattk->aatyp == AT_WEAP && otmp) {
+                struct obj *marmg;
                 int tmp;
 
                 if (otmp->otyp == CORPSE
@@ -983,6 +985,9 @@ register struct attack *mattk;
                         goto do_stone;
                 }
                 dmg += dmgval(otmp, &youmonst);
+                if ((marmg = which_armor(mtmp, W_ARMG)) != 0
+                    && marmg->otyp == GAUNTLETS_OF_POWER)
+                    dmg += rn1(4, 3); /* 3..6 */
                 if (dmg <= 0)
                     dmg = 1;
                 if (!(otmp->oartifact
@@ -1003,7 +1008,10 @@ register struct attack *mattk;
                     tmp -= rnd(-u.uac);
                 if (tmp < 1)
                     tmp = 1;
-                if (u.mh - tmp > 1 && objects[otmp->otyp].oc_material == IRON
+                if (u.mh - tmp > 1
+                    && (objects[otmp->otyp].oc_material == IRON
+                        /* relevant 'metal' objects are scalpel and tsurugi */
+                        || objects[otmp->otyp].oc_material == METAL)
                     && (u.umonnum == PM_BLACK_PUDDING
                         || u.umonnum == PM_BROWN_PUDDING)) {
                     if (tmp > 1)
@@ -1309,7 +1317,7 @@ register struct attack *mattk;
                     return 3;
             break;
         }
-    /* else FALLTHRU */
+        /*FALLTHRU*/
     case AD_SITM: /* for now these are the same */
     case AD_SEDU:
         if (is_animal(mtmp->data)) {
@@ -1546,7 +1554,8 @@ register struct attack *mattk;
                 done(DIED);
                 dmg = 0;
                 break;
-            }    /* else FALLTHRU */
+            }
+            /*FALLTHRU*/
         default: /* case 16: ... case 5: */
             You_feel("your life force draining away...");
             permdmg = 1; /* actual damage done below */

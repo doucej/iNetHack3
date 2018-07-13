@@ -1,5 +1,6 @@
-/* NetHack 3.6	options.c	$NHDT-Date: 1510963525 2017/11/18 00:05:25 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.319 $ */
+/* NetHack 3.6	options.c	$NHDT-Date: 1526112322 2018/05/12 08:05:22 $  $NHDT-Branch: master $:$NHDT-Revision: 1.323 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Michael Allison, 2008. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #ifdef OPTION_LISTS_ONLY /* (AMIGA) external program for opt lists */
@@ -27,11 +28,13 @@ NEARDATA struct instance_flags iflags; /* provide linkage */
 #define PREFER_TILED FALSE
 #endif
 
-#define MESSAGE_OPTION 1
-#define STATUS_OPTION 2
-#define MAP_OPTION 3
-#define MENU_OPTION 4
-#define TEXT_OPTION 5
+enum window_option_types {
+    MESSAGE_OPTION = 1,
+    STATUS_OPTION,
+    MAP_OPTION,
+    MENU_OPTION,
+    TEXT_OPTION
+};
 
 #define PILE_LIMIT_DFLT 5
 
@@ -260,7 +263,7 @@ static struct Comp_Opt {
       DISP_IN_GAME },
     { "align_message", "message window alignment", 20, DISP_IN_GAME }, /*WC*/
     { "align_status", "status window alignment", 20, DISP_IN_GAME },   /*WC*/
-    { "altkeyhandler", "alternate key handler", 20, DISP_IN_GAME },
+    { "altkeyhandler", "alternate key handler", 20, SET_IN_GAME },
 #ifdef BACKWARD_COMPAT
     { "boulder", "deprecated (use S_boulder in sym file instead)", 1,
       SET_IN_GAME },
@@ -2648,9 +2651,8 @@ boolean tinitial, tfrom_file;
             bad_negation(fullname, FALSE);
             return FALSE;
         } else if ((op = string_for_opt(opts, negated)) != 0) {
-#ifdef WIN32
-            (void) strncpy(iflags.altkeyhandler, op, MAX_ALTKEYHANDLER - 5);
-            load_keyboard_handler();
+#if defined(WIN32CON)
+            set_altkeyhandler(op);
 #endif
         } else
             return FALSE;
@@ -2836,7 +2838,7 @@ boolean tinitial, tfrom_file;
     fullname = "pickup_types";
     if (match_optname(opts, fullname, 8, TRUE)) {
         char ocl[MAXOCLASSES + 1], tbuf[MAXOCLASSES + 1], qbuf[QBUFSZ],
-             abuf[BUFSZ];
+            abuf[BUFSZ] = DUMMY;
         int oc_sym;
         boolean badopt = FALSE, compat = (strlen(opts) <= 6), use_menu;
 
@@ -4100,7 +4102,7 @@ int
 doset() /* changing options via menu by Per Liboriussen */
 {
     static boolean made_fmtstr = FALSE;
-    char buf[BUFSZ], buf2[BUFSZ];
+    char buf[BUFSZ], buf2[BUFSZ] = DUMMY;
     const char *name;
     int i = 0, pass, boolcount, pick_cnt, pick_idx, opt_indx;
     boolean *bool_p;
@@ -4779,7 +4781,7 @@ boolean setinitial, setfromfile;
             iflags.menu_headings = mhattr;
     } else if (!strcmp("msgtype", optname)) {
         int opt_idx, nmt, mttyp;
-        char mtbuf[BUFSZ];
+        char mtbuf[BUFSZ] = DUMMY;
 
     msgtypes_again:
         nmt = msgtype_count();
@@ -4818,7 +4820,7 @@ boolean setinitial, setfromfile;
                 if (strlen(tmp->pattern) > ln)
                     Strcat(strncat(mtbuf, tmp->pattern, ln - 3), "...\"");
                 else
-                    Strcat(mtbuf, "\"");
+                    Strcat(strcat(mtbuf, tmp->pattern), "\"");
                 add_menu(tmpwin, NO_GLYPH, &any, 0, 0, ATR_NONE, mtbuf,
                          MENU_UNSELECTED);
                 tmp = tmp->next;
@@ -4841,7 +4843,7 @@ boolean setinitial, setfromfile;
         }
     } else if (!strcmp("menucolors", optname)) {
         int opt_idx, nmc, mcclr, mcattr;
-        char mcbuf[BUFSZ];
+        char mcbuf[BUFSZ] = DUMMY;
 
     menucolors_again:
         nmc = count_menucolors();
@@ -4912,7 +4914,7 @@ boolean setinitial, setfromfile;
         }
     } else if (!strcmp("autopickup_exception", optname)) {
         int opt_idx, pass, totalapes = 0, numapes[2] = { 0, 0 };
-        char apebuf[1 + BUFSZ]; /* so &apebuf[1] is BUFSZ long for getlin() */
+        char apebuf[1 + BUFSZ] = DUMMY; /* so &apebuf[1] is BUFSZ long for getlin() */
         struct autopickup_exception *ape;
 
     ape_again:
@@ -6426,7 +6428,7 @@ void
 set_playmode()
 {
     if (wizard) {
-        if (/*authorize_wizard_mode()*/0)
+        if (/* jrd authorize_wizard_mode()*/ 0)
             Strcpy(plname, "wizard");
         else
             wizard = FALSE; /* not allowed or not available */

@@ -1,5 +1,6 @@
 /* NetHack 3.6	mkobj.c	$NHDT-Date: 1518053380 2018/02/08 01:29:40 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.130 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Derek S. Ray, 2015. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -278,7 +279,7 @@ struct obj *box;
             n = 0;
             break;
         }
-        /*else FALLTHRU*/
+        /*FALLTHRU*/
     case BAG_OF_HOLDING:
         n = 1;
         break;
@@ -884,6 +885,7 @@ boolean artif;
             case LARGE_BOX:
                 otmp->olocked = !!(rn2(5));
                 otmp->otrapped = !(rn2(10));
+                /*FALLTHRU*/
             case ICE_BOX:
             case SACK:
             case OILSKIN_SACK:

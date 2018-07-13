@@ -1,5 +1,6 @@
-/* NetHack 3.6	pcmain.c	$NHDT-Date: 1457207045 2016/03/05 19:44:05 $  $NHDT-Branch: chasonr $:$NHDT-Revision: 1.69 $ */
+/* NetHack 3.6	pcmain.c	$NHDT-Date: 1524413707 2018/04/22 16:15:07 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.74 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Derek S. Ray, 2015. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 /* main.c - MSDOS, OS/2, ST, Amiga, and Windows NetHack */
@@ -56,11 +57,13 @@ extern void FDECL(nethack_exit, (int));
 extern boolean getreturn_enabled; /* from sys/share/pcsys.c */
 extern int redirect_stdout;       /* from sys/share/pcsys.c */
 extern int GUILaunched;
-HANDLE hStdOut;
 char *NDECL(exename);
 char default_window_sys[] = "mswin";
+#ifndef WIN32CON
+HANDLE hStdOut;
 boolean NDECL(fakeconsole);
 void NDECL(freefakeconsole);
+#endif
 #endif
 
 #if defined(MSWIN_GRAPHICS)
@@ -91,6 +94,8 @@ int argc;
 char *argv[];
 {
     boolean resuming;
+
+    nethack_enter(argc, argv);
 
     sys_early_init();
 #ifdef WIN32
@@ -307,6 +312,7 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
     save_getreturn_status = getreturn_enabled;
     raw_clear_screen();
     getreturn_enabled = TRUE;
+    check_recordfile((char *) 0);
 #endif
     initoptions();
 
@@ -329,7 +335,15 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
         Strcpy(hackdir, HACKDIR);
 #endif
     if (argc > 1) {
-        if (!strncmp(argv[1], "-d", 2) && argv[1][2] != 'e') {
+        if (argcheck(argc, argv, ARG_VERSION) == 2)
+            nethack_exit(EXIT_SUCCESS);
+
+        if (argcheck(argc, argv, ARG_DEBUG) == 1) {
+            argc--;
+            argv++;
+	}
+
+        if (argc > 1 && !strncmp(argv[1], "-d", 2) && argv[1][2] != 'e') {
             /* avoid matching "-dec" for DECgraphics; since the man page
              * says -d directory, hope nobody's using -desomething_else
              */
@@ -348,7 +362,7 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
             Strcpy(hackdir, dir);
         }
         if (argc > 1) {
-#if defined(WIN32)
+#if defined(WIN32) && !defined(WIN32CON)
             int sfd = 0;
             boolean tmpconsole = FALSE;
             hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -358,7 +372,7 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
              * may do a prscore().
              */
             if (!strncmp(argv[1], "-s", 2)) {
-#if defined(WIN32)
+#if defined(WIN32) && !defined(WIN32CON)
 
 #if 0
                 if (!hStdOut) {
@@ -385,7 +399,7 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
                 initoptions();
 #endif
                 prscore(argc, argv);
-#ifdef WIN32
+#if defined(WIN32) && !defined(WIN32CON)
                 if (tmpconsole) {
                     getreturn("to exit");
                     freefakeconsole();
@@ -411,7 +425,7 @@ _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);*/
 #endif
                 nhusage();
 
-#ifdef WIN32
+#if defined(WIN32) && !defined(WIN32CON)
                 if (tmpconsole) {
                     getreturn("to exit");
                     freefakeconsole();
@@ -908,7 +922,7 @@ authorize_wizard_mode()
 #define PATH_SEPARATOR '\\'
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) && !defined(WIN32CON)
 static char exenamebuf[PATHLEN];
 extern HANDLE hConIn;
 extern HANDLE hConOut;

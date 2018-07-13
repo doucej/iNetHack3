@@ -69,6 +69,12 @@
 #define PORT_DEBUG /* include ability to debug international keyboard issues \
                       */
 
+#define RUNTIME_PORT_ID /* trigger run-time port identification for \
+                         * identification of exe CPU architecture   \
+                         */
+#define RUNTIME_PASTEBUF_SUPPORT
+
+
 #define SAFERHANGUP /* Define SAFERHANGUP to delay hangup processing   \
                      * until the main command loop. 'safer' because it \
                      * avoids certain cheats and also avoids losing    \
@@ -116,11 +122,6 @@ extern void FDECL(interject, (int));
 #pragma warning(disable : 4101) /* unreferenced local variable */
 #endif
 #endif /* _MSC_VER */
-
-
-#define RUNTIME_PORT_ID /* trigger run-time port identification for \
-                         * identification of exe CPU architecture   \
-                         */
 
 /* The following is needed for prototypes of certain functions */
 #if defined(_MSC_VER)
@@ -202,7 +203,9 @@ extern void NDECL(win32_abort);
 extern void FDECL(nttty_preference_update, (const char *));
 extern void NDECL(toggle_mouse_support);
 extern void FDECL(map_subkeyvalue, (char *));
-extern void NDECL(load_keyboard_handler);
+#if defined(WIN32CON)
+extern void FDECL(set_altkeyhandler, (const char *));
+#endif
 extern void NDECL(raw_clear_screen);
 
 #include <fcntl.h>
@@ -244,5 +247,17 @@ extern int FDECL(set_win32_option, (const char *, const char *));
 #ifdef CHANGE_COLOR
 extern int FDECL(alternative_palette, (char *));
 #endif
+
+#ifdef NDEBUG
+#define ntassert(expression) ((void)0)
+#else
+extern void FDECL(ntassert_failed, (const char * exp, const char * file,
+                                    int line));
+
+#define ntassert(expression) (void)((!!(expression)) || \
+        (ntassert_failed(#expression, __FILE__, __LINE__), 0))
+#endif
+
+#define nethack_enter(argc, argv) nethack_enter_winnt()
 
 #endif /* NTCONF_H */

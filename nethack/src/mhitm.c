@@ -1,5 +1,6 @@
 /* NetHack 3.6	mhitm.c	$NHDT-Date: 1513297346 2017/12/15 00:22:26 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.99 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2011. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -412,8 +413,9 @@ register struct monst *magr, *mdef;
             if (strike) {
                 res[i] = hitmm(magr, mdef, mattk);
                 if ((mdef->data == &mons[PM_BLACK_PUDDING]
-                     || mdef->data == &mons[PM_BROWN_PUDDING]) && otmp
-                    && objects[otmp->otyp].oc_material == IRON
+                     || mdef->data == &mons[PM_BROWN_PUDDING])
+                    && (otmp && (objects[otmp->otyp].oc_material == IRON
+                                 || objects[otmp->otyp].oc_material == METAL))
                     && mdef->mhp > 1
                     && !mdef->mcan) {
                     if (clone_mon(mdef, 0, 0)) {
@@ -574,6 +576,7 @@ struct attack *mattk;
                     Sprintf(buf, "%s squeezes", magr_name);
                     break;
                 }
+                /*FALLTHRU*/
             default:
                 Sprintf(buf, "%s hits", magr_name);
             }
@@ -908,10 +911,17 @@ register struct attack *mattk;
             tmp = 0;
         } else if (mattk->aatyp == AT_WEAP) {
             if (otmp) {
+                struct obj *marmg;
+
                 if (otmp->otyp == CORPSE
                     && touch_petrifies(&mons[otmp->corpsenm]))
                     goto do_stone;
                 tmp += dmgval(otmp, mdef);
+                if ((marmg = which_armor(magr, W_ARMG)) != 0
+                    && marmg->otyp == GAUNTLETS_OF_POWER)
+                    tmp += rn1(4, 3); /* 3..6 */
+                if (tmp < 1) /* is this necessary?  mhitu.c has it... */
+                    tmp = 1;
                 if (otmp->oartifact) {
                     (void) artifact_hit(magr, mdef, otmp, &tmp, dieroll);
                     if (mdef->mhp <= 0)

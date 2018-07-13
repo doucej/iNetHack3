@@ -1,5 +1,6 @@
-/* NetHack 3.6	files.c	$NHDT-Date: 1503309020 2017/08/21 09:50:20 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.215 $ */
+/* NetHack 3.6	files.c	$NHDT-Date: 1526382938 2018/05/15 11:15:38 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.240 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Derek S. Ray, 2015. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #define NEED_VARARGS
@@ -664,13 +665,17 @@ int lev, oflag;
 void
 really_close()
 {
-    int fd = lftrack.fd;
+    int fd;
+    
+    if (lftrack.init) {
+        fd = lftrack.fd;
 
-    lftrack.nethack_thinks_it_is_open = FALSE;
-    lftrack.fd = -1;
-    lftrack.oflag = 0;
-    if (fd != -1)
-        (void) close(fd);
+        lftrack.nethack_thinks_it_is_open = FALSE;
+        lftrack.fd = -1;
+        lftrack.oflag = 0;
+        if (fd != -1)
+            (void) close(fd);
+    }
     return;
 }
 
@@ -1977,7 +1982,7 @@ int src;
     set_configfile_name(fqname(backward_compat_configfile, CONFIGPREFIX, 0));
     if ((fp = fopenp(configfile, "r")) != (FILE *) 0) {
         return fp;
-    } else if (strcmp(backwad_compat_configfile, configfile)) {
+    } else if (strcmp(backward_compat_configfile, configfile)) {
         set_configfile_name(backward_compat_configfile);
         if ((fp = fopenp(configfile, "r")) != (FILE *) 0)
             return fp;
@@ -3017,25 +3022,33 @@ boolean FDECL((*proc), (char *));
     char *ep;
     boolean skip = FALSE, morelines = FALSE;
     char *buf = (char *) 0;
+    size_t inbufsz = sizeof inbuf;
 
     free_config_sections();
 
-    while (fgets(inbuf, (int) (sizeof inbuf), fp)) {
+    while (fgets(inbuf, (int) inbufsz, fp)) {
         ep = index(inbuf, '\n');
         if (skip) { /* in case previous line was too long */
             if (ep)
                 skip = FALSE; /* found newline; next line is normal */
         } else {
-            if (!ep) {
-                config_error_add("Line too long, skipping");
-                skip = TRUE; /* newline missing; discard next fgets */
+            if (!ep) {  /* newline missing */
+                if (strlen(inbuf) < (inbufsz - 2)) {
+                    /* likely the last line of file is just
+                       missing a newline; process it anyway  */
+                    ep = eos(inbuf);
+                } else {
+                    config_error_add("Line too long, skipping");
+                    skip = TRUE; /* discard next fgets */
+                }
             } else {
+                *ep = '\0'; /* remove newline */
+            }
+            if (ep) {
                 char *tmpbuf = (char *) 0;
                 int len;
                 boolean ignoreline = FALSE;
                 boolean oldline = FALSE;
-
-                *ep = '\0'; /* remove newline */
 
                 /* line continuation (trailing '\') */
                 morelines = (--ep >= inbuf && *ep == '\\');
@@ -3469,6 +3482,30 @@ const char *dir UNUSED_if_not_OS2_CODEVIEW;
     Strcpy(tmp, RECORD);
     fq_record = fqname(RECORD, SCOREPREFIX, 0);
 #endif
+#ifdef WIN32
+    /* If dir is NULL it indicates create but
+       only if it doesn't already exist */
+    if (!dir) {
+        char buf[BUFSZ];
+
+        buf[0] = '\0';
+        fd = open(fq_record, O_RDWR);
+        if (!(fd == -1 && errno == ENOENT)) {
+            if (fd >= 0) {
+                (void) nhclose(fd);
+            } else {
+                /* explanation for failure other than missing file */
+                Sprintf(buf, "error   \"%s\", (errno %d).",
+                        fq_record, errno);
+                paniclog("scorefile", buf);
+            }
+            return;
+        }
+        Sprintf(buf, "missing \"%s\", creating new scorefile.",
+                fq_record);
+        paniclog("scorefile", buf);
+    }
+#endif
 
     if ((fd = open(fq_record, O_RDWR)) < 0) {
         /* try to create empty 'record' */
@@ -3505,7 +3542,7 @@ const char *dir UNUSED_if_not_OS2_CODEVIEW;
 
 /* ----------  END SCOREBOARD CREATION ----------- */
 
-/* ----------  BEGIN PANIC/IMPOSSIBLE LOG ----------- */
+/* ----------  BEGIN PANIC/IMPOSSIBLE/TESTING LOG ----------- */
 
 /*ARGSUSED*/
 void
@@ -3542,7 +3579,29 @@ const char *reason; /* explanation */
     return;
 }
 
-/* ----------  END PANIC/IMPOSSIBLE LOG ----------- */
+void
+testinglog(filenm, type, reason)
+const char *filenm;   /* ad hoc file name */
+const char *type; 
+const char *reason;   /* explanation */
+{
+    FILE *lfile;
+    char fnbuf[BUFSZ];
+
+    if (!filenm)
+        return;
+    Strcpy(fnbuf, filenm);
+    if (index(fnbuf, '.') == 0)
+        Strcat(fnbuf, ".log");
+    lfile = fopen_datafile(fnbuf, "a", TROUBLEPREFIX);
+    if (lfile) {
+        (void) fprintf(lfile, "%s\n%s\n", type, reason);
+        (void) fclose(lfile);
+    }
+    return;
+}
+
+/* ----------  END PANIC/IMPOSSIBLE/TESTING LOG ----------- */
 
 #ifdef SELF_RECOVER
 

@@ -1,5 +1,6 @@
-/* NetHack 3.6	unixconf.h	$NHDT-Date: 1451342112 2015/12/28 22:35:12 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.25 $ */
+/* NetHack 3.6	unixconf.h	$NHDT-Date: 1520099325 2018/03/03 17:48:45 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.30 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Pasi Kallinen, 2018. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #ifdef UNIX
@@ -137,6 +138,8 @@
 #define TIMED_DELAY
 #endif
 
+/* #define AVOID_WIN_IOCTL */ /* ensure USE_WIN_IOCTL remains undefined */
+
 /*
  * If you define MAIL, then the player will be notified of new mail
  * when it arrives.  If you also define DEF_MAILREADER then this will
@@ -234,14 +237,16 @@
 /* #define COMPRESS_OPTIONS "-q" */
 #endif
 
+#ifndef FCMASK
 #define FCMASK 0660 /* file creation mask */
+#endif
 
 /* fcntl(2) is a POSIX-portable call for manipulating file descriptors.
  * Comment out the USE_FCNTL if for some reason you have a strange
  * OS/filesystem combination for which fcntl(2) does not work. */
-#ifdef POSIX_TYPES
-#define USE_FCNTL
-#endif
+//jrd #ifdef POSIX_TYPES
+//jrd #define USE_FCNTL
+//jrd #endif
 
 /*
  * The remainder of the file should not need to be changed.
@@ -387,6 +392,10 @@
 #endif /* BSD || SVR4 */
 #endif /* LINUX */
 #endif /* GNOME_GRAPHICS */
+
+#ifdef __APPLE__
+# define RUNTIME_PASTEBUF_SUPPORT
+#endif
 
 #endif /* UNIXCONF_H */
 #endif /* UNIX */

@@ -1,5 +1,6 @@
-/* NetHack 3.6	global.h	$NHDT-Date: 1465114189 2016/06/05 08:09:49 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.49 $ */
+/* NetHack 3.6	global.h	$NHDT-Date: 1524690661 2018/04/25 21:11:01 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.51 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Michael Allison, 2006. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #ifndef GLOBAL_H
@@ -7,7 +8,7 @@
 
 #include <stdio.h>
 
-#define BETA  /* development or beta testing [MRS] */
+#define BETA   /* development or beta testing [MRS] */
 
 #define DEBUG 
 
@@ -350,5 +351,11 @@ struct savefile_info {
 #ifdef UNIX
 #define PANICTRACE_GDB
 #endif
+
+/* Supply nethack_enter macro if not supplied by port */
+#ifndef nethack_enter
+#define nethack_enter(argc, argv) ((void) 0)
+#endif
+
 
 #endif /* GLOBAL_H */

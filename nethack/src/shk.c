@@ -1,5 +1,6 @@
 /* NetHack 3.6	shk.c	$NHDT-Date: 1515144230 2018/01/05 09:23:50 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.136 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2012. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -3101,6 +3102,7 @@ xchar x, y;
         switch (sell_response ? sell_response : ynaq(qbuf)) {
         case 'q':
             sell_response = 'n';
+            /*FALLTHRU*/
         case 'n':
             if (container)
                 dropped_container(obj, shkp, FALSE);
@@ -3110,6 +3112,7 @@ xchar x, y;
             break;
         case 'a':
             sell_response = 'y';
+            /*FALLTHRU*/
         case 'y':
             if (container)
                 dropped_container(obj, shkp, TRUE);

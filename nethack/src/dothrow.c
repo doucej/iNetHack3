@@ -1,5 +1,6 @@
-/* NetHack 3.6	dothrow.c	$NHDT-Date: 1502243899 2017/08/09 01:58:19 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.125 $ */
+/* NetHack 3.6	dothrow.c	$NHDT-Date: 1525012611 2018/04/29 14:36:51 $  $NHDT-Branch: master $:$NHDT-Revision: 1.137 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2013. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 /* Contains code for 't' (throw) */
@@ -360,8 +361,14 @@ dofire()
      * If quiver is empty, we use autoquiver to fill it when the
      * corresponding option is on.  If the option is off or if
      * autoquiver doesn't select anything, we ask what to throw.
-     * For the last, if player's response is a stack, we put
-     * that stack into quiver slot provided it's not wielded.
+     * Then we put the chosen item into the quiver slot unless
+     * it is already in another slot.  [Matters most if it is a
+     * stack but also matters for single item if this throw gets
+     * aborted (ESC at the direction prompt).  Already wielded
+     * item is excluded because wielding might be necessary
+     * (Mjollnir) or make the throw behave differently (aklys),
+     * and alt-wielded item is excluded because switching slots
+     * would end two-weapon combat even if throw gets aborted.]
      */
     if (!ok_to_throw(&shotlimit))
         return 0;
@@ -957,6 +964,7 @@ boolean hitsroof;
                     Your("%s fails to protect you.", helm_simple_name(uarmh));
                 goto petrify;
             }
+            /*FALLTHRU*/
         case CREAM_PIE:
         case BLINDING_VENOM:
             pline("You've got it all over your %s!", body_part(FACE));
@@ -1068,17 +1076,18 @@ void
 throwit(obj, wep_mask, twoweap)
 struct obj *obj;
 long wep_mask; /* used to re-equip returning boomerang */
-boolean
-    twoweap; /* used to restore twoweapon mode if wielded weapon returns */
+boolean twoweap; /* used to restore twoweapon mode if wielded weapon returns */
 {
     register struct monst *mon;
     register int range, urange;
     boolean crossbowing, impaired = (Confusion || Stunned || Blind
                                      || Hallucination || Fumbling);
+    boolean tethered_weapon = (obj->otyp == AKLYS && (wep_mask & W_WEP) != 0);
 
     notonhead = FALSE; /* reset potentially stale value */
     if ((obj->cursed || obj->greased) && (u.dx || u.dy) && !rn2(7)) {
         boolean slipok = TRUE;
+
         if (ammo_and_launcher(obj, uwep))
             pline("%s!", Tobjnam(obj, "misfire"));
         else {
@@ -1120,12 +1129,17 @@ boolean
         bhitpos.x = mon->mx;
         bhitpos.y = mon->my;
     } else if (u.dz) {
-        if (u.dz < 0 && Role_if(PM_VALKYRIE) && obj->oartifact == ART_MJOLLNIR
+        if (u.dz < 0
+            /* Mjollnir must we wielded to be thrown--caller verifies this;
+               aklys must we wielded as primary to return when thrown */
+            && ((Role_if(PM_VALKYRIE) && obj->oartifact == ART_MJOLLNIR) || tethered_weapon)
             && !impaired) {
             pline("%s the %s and returns to your hand!", Tobjnam(obj, "hit"),
                   ceiling(u.ux, u.uy));
             obj = addinv(obj);
             (void) encumber_msg();
+            if (obj->owornmask & W_QUIVER) /* in case addinv() autoquivered */
+                setuqwep((struct obj *) 0);
             setuwep(obj);
             u.twoweap = twoweap;
         } else if (u.dz < 0) {
@@ -1203,13 +1217,18 @@ boolean
             range = 20; /* you must be giant */
         else if (obj->oartifact == ART_MJOLLNIR)
             range = (range + 1) / 2; /* it's heavy */
+        else if (tethered_weapon) /* primary weapon is aklys */
+            /* if an aklys is going to return, range is limited by the
+               length of the attached cord [implicit aspect of item] */
+            range = min(range, BOLT_LIM / 2);
         else if (obj == uball && u.utrap && u.utraptype == TT_INFLOOR)
             range = 1;
 
         if (Underwater)
             range = 1;
 
-        mon = bhit(u.dx, u.dy, range, THROWN_WEAPON,
+        mon = bhit(u.dx, u.dy, range,
+                   tethered_weapon ? THROWN_TETHERED_WEAPON : THROWN_WEAPON,
                    (int FDECL((*), (MONST_P, OBJ_P))) 0,
                    (int FDECL((*), (OBJ_P, OBJ_P))) 0, &obj);
         thrownobj = obj; /* obj may be null now */
@@ -1218,8 +1237,14 @@ boolean
         if (Is_airlevel(&u.uz) || Levitation)
             hurtle(-u.dx, -u.dy, urange, TRUE);
 
-        if (!obj)
+        if (!obj) {
+            /* bhit display cleanup was left with this caller
+               for tethered_weapon, but clean it up now since
+               we're about to return */
+            if (tethered_weapon)
+                tmp_at(DISP_END, 0);
             return;
+        }
     }
 
     if (mon) {
@@ -1246,54 +1271,79 @@ boolean
     }
 
     if (!thrownobj) {
-        ; /* missile has already been handled */
+        /* missile has already been handled */
+        if (tethered_weapon) tmp_at(DISP_END, 0);
     } else if (u.uswallow) {
+        if (tethered_weapon)
+            tmp_at(DISP_END, 0);
         /* ball is not picked up by monster */
         if (obj != uball)
             (void) mpickobj(u.ustuck, obj);
         thrownobj = (struct obj *) 0;
     } else {
-        /* the code following might become part of dropy() */
-        if (obj->oartifact == ART_MJOLLNIR && Role_if(PM_VALKYRIE)
-            && rn2(100)) {
-            /* we must be wearing Gauntlets of Power to get here */
-            sho_obj_return_to_u(obj); /* display its flight */
+        /* Mjollnir must we wielded to be thrown--caller verifies this;
+           aklys must we wielded as primary to return when thrown */
+        if ((obj->oartifact == ART_MJOLLNIR && Role_if(PM_VALKYRIE))
+            || tethered_weapon) {
+            if (rn2(100)) {
+                if (tethered_weapon)        
+                    tmp_at(DISP_END, BACKTRACK);
+                else
+                    sho_obj_return_to_u(obj); /* display its flight */
 
-            if (!impaired && rn2(100)) {
-                pline("%s to your hand!", Tobjnam(obj, "return"));
-                obj = addinv(obj);
-                (void) encumber_msg();
-                setuwep(obj);
-                u.twoweap = twoweap;
-                if (cansee(bhitpos.x, bhitpos.y))
-                    newsym(bhitpos.x, bhitpos.y);
-            } else {
-                int dmg = rn2(2);
-                if (!dmg) {
-                    pline(Blind ? "%s lands %s your %s."
-                                : "%s back to you, landing %s your %s.",
-                          Blind ? Something : Tobjnam(obj, "return"),
-                          Levitation ? "beneath" : "at",
-                          makeplural(body_part(FOOT)));
+                if (!impaired && rn2(100)) {
+                    pline("%s to your hand!", Tobjnam(obj, "return"));
+                    obj = addinv(obj);
+                    (void) encumber_msg();
+                    /* addinv autoquivers an aklys if quiver is empty;
+                       if obj is quivered, remove it before wielding */
+                    if (obj->owornmask & W_QUIVER)
+                        setuqwep((struct obj *) 0);
+                    setuwep(obj);
+                    u.twoweap = twoweap;
+                    if (cansee(bhitpos.x, bhitpos.y))
+                        newsym(bhitpos.x, bhitpos.y);
                 } else {
-                    dmg += rnd(3);
-                    pline(Blind ? "%s your %s!"
-                                : "%s back toward you, hitting your %s!",
-                          Tobjnam(obj, Blind ? "hit" : "fly"),
-                          body_part(ARM));
-                    (void) artifact_hit((struct monst *) 0, &youmonst, obj,
-                                        &dmg, 0);
-                    losehp(Maybe_Half_Phys(dmg), killer_xname(obj),
-                           KILLED_BY);
+                    int dmg = rn2(2);
+
+                    if (!dmg) {
+                        pline(Blind ? "%s lands %s your %s."
+                                    : "%s back to you, landing %s your %s.",
+                              Blind ? Something : Tobjnam(obj, "return"),
+                              Levitation ? "beneath" : "at",
+                              makeplural(body_part(FOOT)));
+                    } else {
+                        dmg += rnd(3);
+                        pline(Blind ? "%s your %s!"
+                                    : "%s back toward you, hitting your %s!",
+                              Tobjnam(obj, Blind ? "hit" : "fly"),
+                              body_part(ARM));
+                        if (obj->oartifact)
+                            (void) artifact_hit((struct monst *) 0, &youmonst,
+                                                obj, &dmg, 0);
+                        losehp(Maybe_Half_Phys(dmg), killer_xname(obj),
+                               KILLED_BY);
+                    }
+                    if (ship_object(obj, u.ux, u.uy, FALSE)) {
+                        thrownobj = (struct obj *) 0;
+                        return;
+                    }
+                    dropy(obj);
                 }
-                if (ship_object(obj, u.ux, u.uy, FALSE)) {
-                    thrownobj = (struct obj *) 0;
-                    return;
-                }
-                dropy(obj);
+                thrownobj = (struct obj *) 0;
+                return;
+            } else {
+                if (tethered_weapon) tmp_at(DISP_END, 0);
+                /* when this location is stepped on, the weapon will be
+                   auto-picked up due to 'obj->was_thrown' of 1;
+                   addinv() prevents thrown Mjollnir from being placed
+                   into the quiver slot, but an aklys will end up there if
+                   that slot is empty at the time; since hero will need to
+                   explicitly rewield the weapon to get throw-and-return
+                   capability back anyway, quivered or not shouldn't matter */
+                pline("%s to return!", Tobjnam(obj, "fail"));
+                /* continue below with placing 'obj' at target location */
             }
-            thrownobj = (struct obj *) 0;
-            return;
         }
 
         if (!IS_SOFT(levl[bhitpos.x][bhitpos.y].typ) && breaktest(obj)) {
@@ -1986,6 +2036,7 @@ boolean in_view;
     default: /* glass or crystal wand */
         if (obj->oclass != WAND_CLASS)
             impossible("breaking odd object?");
+        /*FALLTHRU*/
     case CRYSTAL_PLATE_MAIL:
     case LENSES:
     case MIRROR:

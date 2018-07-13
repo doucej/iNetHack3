@@ -1,5 +1,6 @@
-/* NetHack 3.6	botl.c	$NHDT-Date: 1506903619 2017/10/02 00:20:19 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.81 $ */
+/* NetHack 3.6	botl.c	$NHDT-Date: 1526597284 2018/05/17 22:48:04 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.93 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Michael Allison, 2006. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -482,14 +483,14 @@ STATIC_DCL struct istat_s initblstats[MAXBLSTATS] = {
     INIT_BLSTAT("charisma", " Ch:%s", ANY_INT, 10, BL_CH),
     INIT_BLSTAT("alignment", " %s", ANY_STR, 40, BL_ALIGN),
     INIT_BLSTAT("score", " S:%s", ANY_LONG, 20, BL_SCORE),
-    INIT_BLSTAT("carrying-capacity", " %s", ANY_LONG, 20, BL_CAP),
+    INIT_BLSTAT("carrying-capacity", " %s", ANY_INT, 20, BL_CAP),
     INIT_BLSTAT("gold", " %s", ANY_LONG, 30, BL_GOLD),
     INIT_BLSTATP("power", " Pw:%s", ANY_INT, 10, BL_ENEMAX, BL_ENE),
     INIT_BLSTAT("power-max", "(%s)", ANY_INT, 10, BL_ENEMAX),
-    INIT_BLSTAT("experience-level", " Xp:%s", ANY_LONG, 10, BL_XP),
+    INIT_BLSTAT("experience-level", " Xp:%s", ANY_INT, 10, BL_XP),
     INIT_BLSTAT("armor-class", " AC:%s", ANY_INT, 10, BL_AC),
     INIT_BLSTAT("HD", " HD:%s", ANY_INT, 10, BL_HD),
-    INIT_BLSTAT("time", " T:%s", ANY_INT, 20, BL_TIME),
+    INIT_BLSTAT("time", " T:%s", ANY_LONG, 20, BL_TIME),
     INIT_BLSTAT("hunger", " %s", ANY_UINT, 40, BL_HUNGER),
     INIT_BLSTATP("hitpoints", " HP:%s", ANY_INT, 10, BL_HPMAX, BL_HP),
     INIT_BLSTAT("hitpoints-max", "(%s)", ANY_INT, 10, BL_HPMAX),
@@ -629,7 +630,7 @@ bot_via_windowport()
 
     /* Experience */
     blstats[idx][BL_XP].a.a_int = u.ulevel;
-    blstats[idx][BL_EXP].a.a_int = u.uexp;
+    blstats[idx][BL_EXP].a.a_long = u.uexp;
 
     /* Time (moves) */
     blstats[idx][BL_TIME].a.a_long = moves;
@@ -857,7 +858,10 @@ boolean
             : TRUE;
 
         fieldname = initblstats[i].fldname;
-        fieldfmt = initblstats[i].fldfmt;
+        if (fld == BL_TITLE && iflags.wc2_hitpointbar)
+            fieldfmt = "%-30s";
+        else
+            fieldfmt = initblstats[i].fldfmt;
         status_enablefield(fld, fieldname, fieldfmt, fldenabled);
     }
     update_all = TRUE;
@@ -888,7 +892,7 @@ status_finish()
                 blstats[1][i].thresholds = blstats[0][i].thresholds;
                 temp = next;
             }
-	}
+        }
 #endif /* STATUS_HILITES */
     }
 }
@@ -1296,9 +1300,8 @@ merge_bestcolor(bestcolor, newcolor)
 int *bestcolor;
 int newcolor;
 {
-    int batr, bclr, natr, nclr;
+    int natr = HL_UNDEF, nclr = NO_COLOR;
 
-    split_clridx(*bestcolor, &bclr, &batr);
     split_clridx(newcolor, &nclr, &natr);
 
     if (nclr != NO_COLOR)
@@ -1314,7 +1317,7 @@ int newcolor;
 
 /*
  * get_hilite_color
- * 
+ *
  * Figures out, based on the value and the
  * direction it is moving, the color that the field
  * should be displayed in.
@@ -1356,7 +1359,6 @@ int *colorptr;
         /* there are hilites set here */
         int max_pc = 0, min_pc = 100;
         int max_val = 0, min_val = LARGEST_INT;
-        boolean changed = FALSE;
         boolean exactmatch = FALSE;
 
         hl = blstats[idx][fldidx].thresholds;
@@ -1383,14 +1385,11 @@ int *colorptr;
             case BL_TH_UPDOWN:
                 if (chg < 0 && hl->rel == LT_VALUE) {
                     merge_bestcolor(&bestcolor, hl->coloridx);
-                    changed = TRUE;
                 } else if (chg > 0 && hl->rel == GT_VALUE) {
                     merge_bestcolor(&bestcolor, hl->coloridx);
-                    changed = TRUE;
                 } else if (hl->rel == EQ_VALUE && chg) {
                     merge_bestcolor(&bestcolor, hl->coloridx);
                     min_val = max_val = hl->value.a_int;
-                    changed = TRUE;
                 }
                 break;
             case BL_TH_VAL_ABSOLUTE:
@@ -1433,7 +1432,7 @@ int *colorptr;
                 break;
             }
             hl = hl->next;
-	}
+        }
     }
     *colorptr = bestcolor;
     return;
@@ -1478,10 +1477,18 @@ boolean from_configfile;
         c = lowc(*op);
         if (c == ' ') {
             if (fldnum >= 1) {
-                rslt = parse_status_hl2(hsbuf, from_configfile);
-                if (!rslt) {
-                    badopt = TRUE;
-                    break;
+                if (fldnum == 1 && strcmpi(hsbuf[0], "title") == 0) {
+                    /* spaces are allowed in title */
+                    hsbuf[fldnum][ccount++] = c;
+                    hsbuf[fldnum][ccount] = '\0';
+                    op++;
+                    continue;
+                } else {
+                    rslt = parse_status_hl2(hsbuf, from_configfile);
+                    if (!rslt) {
+                        badopt = TRUE;
+                        break;
+                    }
                 }
             }
             for (i = 0; i < MAX_THRESH; ++i) {
@@ -1508,17 +1515,23 @@ boolean from_configfile;
     return TRUE;
 }
 
-/* is str in the format of "(<>)?[0-9]+%?" regex */
+/* is str in the format of "[<>]?-?[0-9]+%?" regex */
 STATIC_OVL boolean
 is_ltgt_percentnumber(str)
 const char *str;
 {
     const char *s = str;
 
-    if (*s == '<' || *s == '>') s++;
-    while (digit(*s)) s++;
-    if (*s == '%') s++;
-
+    if (*s == '<' || *s == '>')
+        s++;
+    if (*s == '-')
+        s++;
+    /* note:  this doesn't match the regexp shown above since it doesn't
+       require at least one digit; but it's adequate for how it gets used */
+    while (digit(*s))
+        s++;
+    if (*s == '%')
+        s++;
     return (*s == '\0');
 }
 
@@ -1530,7 +1543,7 @@ const char *str;
     const char *s = str;
 
     while (*s) {
-        if (!index("<>0123456789%", *s))
+        if (!index("<>-0123456789%", *s))
             return FALSE;
         s++;
     }
@@ -1756,12 +1769,12 @@ boolean from_configfile;
                 up = TRUE;
             changed = TRUE;
             goto do_rel;
-	} else if (fld == BL_CAP
+        } else if (fld == BL_CAP
                    && is_fld_arrayvalues(s[sidx], enc_stat,
                                          SLT_ENCUMBER, OVERLOADED+1, &kidx)) {
             txt = enc_stat[kidx];
             txtval = TRUE;
-	    goto do_rel;
+            goto do_rel;
         } else if (fld == BL_ALIGN
                    && is_fld_arrayvalues(s[sidx], aligntxt, 0, 3, &kidx)) {
             txt = aligntxt[kidx];
@@ -1787,7 +1800,8 @@ boolean from_configfile;
             (void) stripchars(tmpbuf, "%<>", tmp);
             tmp = tmpbuf;
             while (*tmp) {
-                if (!index("0123456789", *tmp))
+                if (!index("0123456789", *tmp)
+                    && (*tmp != '-' || tmp > tmpbuf))
                     return FALSE;
                 tmp++;
             }
@@ -1835,8 +1849,7 @@ do_rel:
         else
             hilite.rel = LT_VALUE;
 
-        if (initblstats[fld].anytype == ANY_STR
-            && (percent || numeric)) {
+        if (initblstats[fld].anytype == ANY_STR && (percent || numeric)) {
             config_error_add("Field '%s' does not support numeric values",
                              initblstats[fld].fldname);
             return FALSE;
@@ -1894,7 +1907,7 @@ do_rel:
                 if (c >= CLR_MAX || coloridx != -1)
                     return FALSE;
                 coloridx = c;
-	    }
+            }
         }
         if (coloridx == -1)
             coloridx = NO_COLOR;
@@ -2118,7 +2131,7 @@ int sidx;
             if (!success)
                 config_error_add("Missing condition(s)");
             return success;
-	}
+        }
 
         Strcpy(buf, tmp);
         conditions_bitmask = str2conditionbitmask(buf);
@@ -2192,7 +2205,7 @@ int sidx;
                 if (k >= CLR_MAX)
                     return FALSE;
                 coloridx = k;
-	    }
+            }
         }
         /* set the bits in the appropriate member of the
            condition array according to color chosen as index */
@@ -2220,7 +2233,7 @@ clear_status_hilites()
                 blstats[1][i].thresholds = blstats[0][i].thresholds;
                 temp = next;
             }
-	}
+        }
     }
 }
 
@@ -2741,7 +2754,7 @@ choose_value:
 
     if (behavior == BL_TH_VAL_PERCENTAGE
         || behavior == BL_TH_VAL_ABSOLUTE) {
-        char inbuf[BUFSZ], buf[BUFSZ];
+        char inbuf[BUFSZ] = DUMMY, buf[BUFSZ];
         int val;
         boolean skipltgt = FALSE;
         boolean gotnum = FALSE;
@@ -2903,7 +2916,7 @@ choose_value:
             hilite.rel = TXT_VALUE;
             Strcpy(hilite.textmatch, rolelist[rv]);
         } else {
-            char inbuf[BUFSZ];
+            char inbuf[BUFSZ] = DUMMY;
 
             inbuf[0] = '\0';
             getlin(qry_buf, inbuf);

@@ -1,18 +1,17 @@
 
-    NetHack version 3.6.1 [beta]
+    NetHack version 3.6.2 [beta]
 
 Options compiled into this edition:
 
     color, data file compression, data librarian, insurance files for
     recovering from crashes, log file, extended log file, errors and
-    warnings log file, news file, pattern matching via :PATMATCH:, screen
-    clipping, shell command, traditional status display, status via
-    windowport with highlighting, suspend command, terminal info library,
-    timed wait for display effects, system configuration at run-time, save
-    and bones files accepted from versions 3.6.0 through 3.6.1, and basic
-    NetHack features.
+    warnings log file, news file, pattern matching via :PATMATCH:, shell
+    command, traditional status display, status via windowport with
+    highlighting, suspend command, terminal info library, timed wait for
+    display effects, save and bones files accepted from versions 3.6.0
+    through 3.6.2, and basic NetHack features.
 
 Supported windowing system:
 
-    traditional tty-based graphics.
+    X11.
 

@@ -1654,11 +1654,16 @@ mswin_getlin(const char *question, char *input)
         SendMessage(mswin_hwnd_from_winid(WIN_MESSAGE), WM_MSNH_COMMAND,
                     (WPARAM) MSNH_MSG_CARET, (LPARAM) &createcaret);
 
-        mswin_clear_nhwindow(WIN_MESSAGE);
+        /* mswin_clear_nhwindow(WIN_MESSAGE); */
         mswin_putstr_ex(WIN_MESSAGE, ATR_BOLD, question, 0);
         mswin_putstr_ex(WIN_MESSAGE, ATR_BOLD, " ", 1);
+#ifdef EDIT_GETLIN
+        mswin_putstr_ex(WIN_MESSAGE, ATR_BOLD, input, 0);
+        len = strlen(input);
+#else
         input[0] = '\0';
         len = 0;
+#endif
         ShowCaret(mswin_hwnd_from_winid(WIN_MESSAGE));
         done = FALSE;
         while (!done) {
@@ -2271,7 +2276,7 @@ logDebug(const char *fmt, ...)
 /* Reading and writing settings from the registry. */
 #define CATEGORYKEY "Software"
 #define COMPANYKEY "NetHack"
-#define PRODUCTKEY "NetHack 3.6.1"
+#define PRODUCTKEY "NetHack 3.6.2"
 #define SETTINGSKEY "Settings"
 #define MAINSHOWSTATEKEY "MainShowState"
 #define MAINMINXKEY "MainMinX"

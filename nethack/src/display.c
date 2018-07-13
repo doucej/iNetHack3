@@ -1,4 +1,4 @@
-/* NetHack 3.6	display.c	$NHDT-Date: 1496101037 2017/05/29 23:37:17 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.87 $ */
+/* NetHack 3.6	display.c	$NHDT-Date: 1525056598 2018/04/30 02:49:58 $  $NHDT-Branch: master $:$NHDT-Revision: 1.92 $ */
 /* Copyright (c) Dean Luick, with acknowledgements to Kevin Darcy */
 /* and Dave Cohrs, 1990.                                          */
 /* NetHack may be freely redistributed.  See license for details. */
@@ -124,6 +124,7 @@ STATIC_DCL void FDECL(display_warning, (struct monst *));
 
 STATIC_DCL int FDECL(check_pos, (int, int, int));
 STATIC_DCL int FDECL(get_bk_glyph, (XCHAR_P, XCHAR_P));
+STATIC_DCL int FDECL(tether_glyph, (int, int));
 
 /*#define WA_VERBOSE*/ /* give (x,y) locations for all "bad" spots */
 #ifdef WA_VERBOSE
@@ -391,6 +392,7 @@ xchar worm_tail;            /* mon is actually a worm tail */
         default:
             impossible("display_monster:  bad m_ap_type value [ = %d ]",
                        (int) mon->m_ap_type);
+            /*FALLTHRU*/
         case M_AP_NOTHING:
             show_glyph(x, y, mon_to_glyph(mon));
             break;
@@ -495,6 +497,13 @@ register struct monst *mon;
         impossible("display_warning did not match warning type?");
         return;
     }
+    /* warning glyph is drawn on the monster layer; unseen
+       monster glyph is drawn on the object/trap/floor layer;
+       if we see a 'warning' move onto 'remembered, unseen' we
+       need to explicitly remove that in order for it to not
+       reappear when the warned-of monster moves off that spot */
+    if (glyph_is_invisible(levl[x][y].glyph))
+        unmap_object(x, y);
     show_glyph(x, y, glyph);
 }
 
@@ -884,6 +893,16 @@ xchar x, y;
     }
 }
 
+int
+tether_glyph(x, y)
+int x, y;
+{
+    int tdx, tdy;
+    tdx = u.ux - x;
+    tdy = u.uy - y;
+    return zapdir_to_glyph(sgn(tdx),sgn(tdy), 2);
+}
+
 /*
  * tmp_at()
  *
@@ -904,6 +923,9 @@ xchar x, y;
  *
  * DISP_BEAM  - Display the given glyph at each location, but do not erase
  *              any until the close call.
+ * DISP_TETHER- Display a tether glyph at each location, and the tethered
+ *              object at the farthest location, but do not erase any
+ *              until the return trip or close.
  * DISP_FLASH - Display the given glyph at each location, but erase the
  *              previous location's glyph.
  * DISP_ALWAYS- Like DISP_FLASH, but vision is not taken into account.
@@ -929,6 +951,7 @@ int x, y;
     switch (x) {
     case DISP_BEAM:
     case DISP_ALL:
+    case DISP_TETHER:
     case DISP_FLASH:
     case DISP_ALWAYS:
         if (!tglyph)
@@ -971,6 +994,22 @@ int x, y;
             /* Erase (reset) from source to end */
             for (i = 0; i < tglyph->sidx; i++)
                 newsym(tglyph->saved[i].x, tglyph->saved[i].y);
+	} else if (tglyph->style == DISP_TETHER) {
+            int i;
+
+            if (y == BACKTRACK && tglyph->sidx > 1) {
+                /* backtrack */
+                for (i = tglyph->sidx - 1; i > 0; i--) {
+                    newsym(tglyph->saved[i].x, tglyph->saved[i].y);
+                    show_glyph(tglyph->saved[i - 1].x,
+                               tglyph->saved[i - 1].y, tglyph->glyph);
+                    flush_screen(0);   /* make sure it shows up */
+                    delay_output();
+                }
+                tglyph->sidx = 1;
+            }
+            for (i = 0; i < tglyph->sidx; i++)
+                newsym(tglyph->saved[i].x, tglyph->saved[i].y);
         } else {              /* DISP_FLASH or DISP_ALWAYS */
             if (tglyph->sidx) /* been called at least once */
                 newsym(tglyph->saved[0].x, tglyph->saved[0].y);
@@ -991,6 +1030,20 @@ int x, y;
             if (tglyph->sidx >= TMP_AT_MAX_GLYPHS)
                 break; /* too many locations */
             /* save pos for later erasing */
+            tglyph->saved[tglyph->sidx].x = x;
+            tglyph->saved[tglyph->sidx].y = y;
+            tglyph->sidx += 1;
+	} else if (tglyph->style == DISP_TETHER) {
+            if (tglyph->sidx >= TMP_AT_MAX_GLYPHS)
+                break; /* too many locations */
+            if (tglyph->sidx) {
+                int px, py;
+
+                px = tglyph->saved[tglyph->sidx-1].x;
+                py = tglyph->saved[tglyph->sidx-1].y;
+                show_glyph(px, py, tether_glyph(px, py));
+            }
+            /* save pos for later use or erasure */
             tglyph->saved[tglyph->sidx].x = x;
             tglyph->saved[tglyph->sidx].y = y;
             tglyph->sidx += 1;

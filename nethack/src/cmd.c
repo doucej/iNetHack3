@@ -1,5 +1,6 @@
-/* NetHack 3.6	cmd.c	$NHDT-Date: 1513130017 2017/12/13 01:53:37 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.277 $ */
+/* NetHack 3.6	cmd.c	$NHDT-Date: 1523306904 2018/04/09 20:48:24 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.281 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
+/*-Copyright (c) Robert Patrick Rankin, 2013. */
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
@@ -580,7 +581,7 @@ enter_explore_mode(VOID_ARGS)
 #ifdef SYSCF
 #if defined(UNIX)
         if (!sysopt.explorers || !sysopt.explorers[0]
-            /*|| !check_user_string(sysopt.explorers)*/) {
+            || !check_user_string(sysopt.explorers)) {
             You("cannot access explore mode.");
             return 0;
         }
@@ -750,7 +751,7 @@ wiz_mon_polycontrol(VOID_ARGS)
 STATIC_PTR int
 wiz_level_change(VOID_ARGS)
 {
-    char buf[BUFSZ];
+    char buf[BUFSZ] = DUMMY;
     int newlevel;
     int ret;
 
@@ -1278,6 +1279,7 @@ wiz_intrinsic(VOID_ARGS)
         }
         if (n >= 1)
             free((genericptr_t) pick_list);
+        doredraw();
     } else
         pline("Unavailable command '%s'.",
               visctrl((int) cmd_from_func(wiz_intrinsic)));
@@ -2767,7 +2769,7 @@ int final;
 
     if (!u.uconduct.food)
         enl_msg(You_, "have gone", "went", " without food", "");
-    /* But beverages are okay */
+        /* but beverages are okay */
     else if (!u.uconduct.unvegan)
         you_have_X("followed a strict vegan diet");
     else if (!u.uconduct.unvegetarian)
@@ -3697,7 +3699,7 @@ static int
 wiz_migrate_mons()
 {
     int mcount = 0;
-    char inbuf[BUFSZ];
+    char inbuf[BUFSZ] = DUMMY;
     struct permonst *ptr;
     struct monst *mtmp;
     d_level tolevel;
@@ -4049,6 +4051,8 @@ int NDECL((*cmd_func));
         || cmd_func == doloot
         /* travel: pop up a menu of interesting targets in view */
         || cmd_func == dotravel
+        /* wizard mode ^V */
+        || cmd_func == wiz_level_tele
         /* 'm' prefix allowed for some extended commands */
         || cmd_func == doextcmd || cmd_func == doextlist)
         return TRUE;
@@ -4118,7 +4122,8 @@ register char *cmd;
         break;
     case NHKF_RUN2:
         if (!Cmd.num_pad)
-            break; /* else FALLTHRU */
+            break;
+        /*FALLTHRU*/
     case NHKF_RUN:
         if (movecmd(lowc(cmd[1]))) {
             context.run = 3;
@@ -4128,7 +4133,8 @@ register char *cmd;
         break;
     case NHKF_FIGHT2:
         if (!Cmd.num_pad)
-            break; /* else FALLTHRU */
+            break;
+        /*FALLTHRU*/
     /* Effects of movement commands and invisible monsters:
      * m: always move onto space (even if 'I' remembered)
      * F: always attack space (even if 'I' not remembered)
@@ -4246,7 +4252,7 @@ register char *cmd;
     } else if (*cmd == ' ' && !flags.rest_on_space) {
         bad_command = TRUE; /* skip cmdlist[] loop */
 
-        /* handle all other commands */
+    /* handle all other commands */
     } else {
         register const struct ext_func_tab *tlist;
         int res, NDECL((*func));
@@ -4527,14 +4533,16 @@ const char *msg;
         break;
     case NHKF_RUN2:
         if (!Cmd.num_pad)
-            break; /* else FALLTHRU */
+            break;
+        /*FALLTHRU*/
     case NHKF_RUN:
     case NHKF_RUN_NOPICKUP:
         dothat = "run";
         break;
     case NHKF_FIGHT2:
         if (!Cmd.num_pad)
-            break; /* else FALLTHRU */
+            break;
+        /*FALLTHRU*/
     case NHKF_FIGHT:
         dothat = "fight";
         how = ""; /* avoid "fight at yourself" */
@@ -5449,7 +5457,7 @@ const char *prompt;
        to give the go-ahead for this query; default is "no" unless the
        ParanoidConfirm flag is set in which case there's no default */
     if (be_paranoid) {
-        char qbuf[QBUFSZ], ans[BUFSZ];
+        char qbuf[QBUFSZ], ans[BUFSZ] = DUMMY;
         const char *promptprefix = "", *responsetype = ParanoidConfirm
                                                            ? "(yes|no)"
                                                            : "(yes) [no]";

@@ -1,4 +1,4 @@
-/* NetHack 3.6	winnt.c	$NHDT-Date: 1431737068 2015/05/16 00:44:28 $  $NHDT-Branch: master $:$NHDT-Revision: 1.26 $ */
+/* NetHack 3.6	winnt.c	$NHDT-Date: 1524321419 2018/04/21 14:36:59 $  $NHDT-Branch: NetHack-3.6.0 $:$NHDT-Revision: 1.30 $ */
 /* Copyright (c) NetHack PC Development Team 1993, 1994 */
 /* NetHack may be freely redistributed.  See license for details. */
 
@@ -35,6 +35,9 @@
 /* globals required within here */
 HANDLE ffhandle = (HANDLE) 0;
 WIN32_FIND_DATA ffd;
+typedef HWND(WINAPI *GETCONSOLEWINDOW)();
+static HWND GetConsoleHandle(void);
+static HWND GetConsoleHwnd(void);
 
 /* The function pointer nt_kbhit contains a kbhit() equivalent
  * which varies depending on which window port is active.
@@ -204,7 +207,7 @@ VA_DECL(const char *, s)
     /* error() may get called before tty is initialized */
     if (iflags.window_inited)
         end_screen();
-    if (!strncmpi(windowprocs.name, "tty", 3)) {
+    if (windowprocs.name != NULL && !strncmpi(windowprocs.name, "tty", 3)) {
         buf[0] = '\n';
         (void) vsprintf(&buf[1], s, VA_ARGS);
         Strcat(buf, "\n");
@@ -316,6 +319,118 @@ int interjection_type;
         msmsg(interjection_buf[interjection_type]);
 }
 
+#ifdef RUNTIME_PASTEBUF_SUPPORT
+
+void port_insert_pastebuf(buf)
+char *buf;
+{
+    /* This implementation will utilize the windows clipboard
+     * to accomplish this.
+     */
+
+    char *tmp = buf;
+    HGLOBAL hglbCopy; 
+    WCHAR *w, w2[2];
+    int cc, rc, abytes;
+    LPWSTR lpwstrCopy;
+    HANDLE hresult;
+
+    if (!buf)
+        return; 
+ 
+    cc = strlen(buf);
+    /* last arg=0 means "tell me the size of the buffer that I need" */
+    rc = MultiByteToWideChar(GetConsoleOutputCP(), 0, buf, -1, w2, 0);
+    if (!rc) return;
+
+    abytes = rc * sizeof(WCHAR);
+    w = (WCHAR *)alloc(abytes);     
+    /* Housekeeping need: +free(w) */
+
+    rc = MultiByteToWideChar(GetConsoleOutputCP(), 0, buf, -1, w, rc);
+    if (!rc) {
+        free(w);
+        return;
+    }
+    if (!OpenClipboard(NULL)) {
+        free(w);
+        return;
+    }
+    /* Housekeeping need: +CloseClipboard(), free(w) */
+
+    EmptyClipboard(); 
+
+    /* allocate global mem obj to hold the text */
+ 
+    hglbCopy = GlobalAlloc(GMEM_MOVEABLE, abytes);
+    if (hglbCopy == NULL) { 
+        CloseClipboard(); 
+        free(w);
+        return;
+    } 
+    /* Housekeeping need: +GlobalFree(hglbCopy), CloseClipboard(), free(w) */
+ 
+    lpwstrCopy = (LPWSTR)GlobalLock(hglbCopy);
+    /* Housekeeping need: +GlobalUnlock(hglbCopy), GlobalFree(hglbCopy),
+                            CloseClipboard(), free(w) */
+
+    memcpy(lpwstrCopy, w, abytes);
+    GlobalUnlock(hglbCopy);
+    /* Housekeeping need: GlobalFree(hglbCopy), CloseClipboard(), free(w) */
+
+    /* put it on the clipboard */
+    hresult = SetClipboardData(CF_UNICODETEXT, hglbCopy);
+    if (!hresult) {
+        raw_printf("Error copying to clipboard.\n");
+        GlobalFree(hglbCopy); /* only needed if clipboard didn't accept data */
+    }
+    /* Housekeeping need: CloseClipboard(), free(w) */
+ 
+    CloseClipboard(); 
+    free(w);
+    return;
+}
+
+static HWND
+GetConsoleHandle(void)
+{
+    HMODULE hMod = GetModuleHandle("kernel32.dll");
+    GETCONSOLEWINDOW pfnGetConsoleWindow =
+        (GETCONSOLEWINDOW) GetProcAddress(hMod, "GetConsoleWindow");
+    if (pfnGetConsoleWindow)
+        return pfnGetConsoleWindow();
+    else
+        return GetConsoleHwnd();
+}
+
+static HWND
+GetConsoleHwnd(void)
+{
+    int iterations = 0;
+    HWND hwndFound = 0;
+    char OldTitle[1024], NewTitle[1024], TestTitle[1024];
+
+    /* Get current window title */
+    GetConsoleTitle(OldTitle, sizeof OldTitle);
+
+    (void) sprintf(NewTitle, "NETHACK%d/%d", GetTickCount(),
+                   GetCurrentProcessId());
+    SetConsoleTitle(NewTitle);
+
+    GetConsoleTitle(TestTitle, sizeof TestTitle);
+    while (strcmp(TestTitle, NewTitle) != 0) {
+        iterations++;
+        /* sleep(0); */
+        GetConsoleTitle(TestTitle, sizeof TestTitle);
+    }
+    hwndFound = FindWindow(NULL, NewTitle);
+    SetConsoleTitle(OldTitle);
+    /*       printf("%d iterations\n", iterations); */
+    return hwndFound;
+}
+
+#endif
+
 #ifdef RUNTIME_PORT_ID
 /*
  * _M_IX86 is Defined for x86 processors. This is not defined for x64
@@ -345,6 +460,31 @@ char *buf;
     return buf;
 }
 #endif /* RUNTIME_PORT_ID */
+
+/* ntassert_failed is called when an ntassert's condition is false */
+void ntassert_failed(const char * exp, const char * file, int line)
+{
+    char message[128];
+    _snprintf(message, sizeof(message),
+                "NHASSERT(%s) in '%s' at line %d\n", exp, file, line);
+
+    if (IsDebuggerPresent()) {
+        OutputDebugStringA(message);
+        DebugBreak();
+    }
+
+    // strip off the newline
+    message[strlen(message) - 1] = '\0';
+    error(message);
+}
+
+/* nethack_enter_winnt() is the first thing called from main */
+void nethack_enter_winnt()
+{
+#ifdef WIN32CON
+    nethack_enter_nttty();
+#endif
+}
 
 #endif /* WIN32 */
 

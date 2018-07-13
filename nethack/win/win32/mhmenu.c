@@ -160,10 +160,11 @@ mswin_menu_window_select_menu(HWND hWnd, int how, MENU_ITEM_P **_selected,
         ap = data->menu.gacc;
         for (i = 0; i < data->menu.size; i++) {
             if (data->menu.items[i].accelerator != 0) {
-                next_char = (char) (data->menu.items[i].accelerator + 1);
+                if (isalpha(data->menu.items[i].accelerator)) {
+                    next_char = (char)(data->menu.items[i].accelerator + 1);
+                }
             } else if (NHMENU_IS_SELECTABLE(data->menu.items[i])) {
-                if ((next_char >= 'a' && next_char <= 'z')
-                    || (next_char >= 'A' && next_char <= 'Z')) {
+                if (isalpha(next_char)) {
                     data->menu.items[i].accelerator = next_char;
                 } else {
                     if (next_char > 'z')
@@ -1207,6 +1208,21 @@ onListChar(HWND hWnd, HWND hwndList, WORD ch)
 
     data = (PNHMenuWindow) GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
+    is_accelerator = FALSE;
+    for (i = 0; i < data->menu.size; i++) {
+        if (data->menu.items[i].accelerator == ch) {
+            is_accelerator = TRUE;
+            break;
+        }
+    }
+
+    /* Don't use switch if input matched an accelerator.  Sometimes
+     * accelerators can conflict with menu actions.  For example, when
+     * engraving the extra choice of using fingers matches MENU_UNSELECT_ALL.
+     */
+    if (is_accelerator)
+        goto accelerator;
+
     switch (ch) {
     case MENU_FIRST_PAGE:
         i = 0;
@@ -1401,6 +1417,7 @@ onListChar(HWND hWnd, HWND hwndList, WORD ch)
         }
     } break;
 
+    accelerator:
     default:
         if (strchr(data->menu.gacc, ch)
             && !(ch == '0' && data->menu.counting)) {
@@ -1447,14 +1464,6 @@ onListChar(HWND hWnd, HWND hwndList, WORD ch)
                 }
             }
             return -2;
-        }
-
-        is_accelerator = FALSE;
-        for (i = 0; i < data->menu.size; i++) {
-            if (data->menu.items[i].accelerator == ch) {
-                is_accelerator = TRUE;
-                break;
-            }
         }
 
         if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')
