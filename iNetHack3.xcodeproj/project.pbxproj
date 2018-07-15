@@ -630,6 +630,36 @@
 		C12F985B202F60C900F296F6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F3397810BD4C6F0054E1A9 /* SystemConfiguration.framework */; };
 		C172677D204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
 		C172677E204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
+		C199E22620F98AED00499D0C /* bigrm-8.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22120F98AEC00499D0C /* bigrm-8.lev */; };
+		C199E22720F98AED00499D0C /* bigrm-7.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22220F98AEC00499D0C /* bigrm-7.lev */; };
+		C199E22820F98AED00499D0C /* bigrm-9.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22320F98AED00499D0C /* bigrm-9.lev */; };
+		C199E22920F98AED00499D0C /* bigrm-6.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22420F98AED00499D0C /* bigrm-6.lev */; };
+		C199E22A20F98AED00499D0C /* bigrm-10.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22520F98AED00499D0C /* bigrm-10.lev */; };
+		C199E23220F98B3100499D0C /* epitaph in Resources */ = {isa = PBXBuildFile; fileRef = C199E22B20F98B3000499D0C /* epitaph */; };
+		C199E23320F98B3100499D0C /* medusa-4.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22C20F98B3000499D0C /* medusa-4.lev */; };
+		C199E23420F98B3100499D0C /* keyhelp in Resources */ = {isa = PBXBuildFile; fileRef = C199E22D20F98B3000499D0C /* keyhelp */; };
+		C199E23520F98B3100499D0C /* medusa-3.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22E20F98B3000499D0C /* medusa-3.lev */; };
+		C199E23620F98B3100499D0C /* engrave in Resources */ = {isa = PBXBuildFile; fileRef = C199E22F20F98B3000499D0C /* engrave */; };
+		C199E23720F98B3100499D0C /* tribute in Resources */ = {isa = PBXBuildFile; fileRef = C199E23020F98B3000499D0C /* tribute */; };
+		C199E23820F98B3100499D0C /* symbols in Resources */ = {isa = PBXBuildFile; fileRef = C199E23120F98B3000499D0C /* symbols */; };
+		C199E23C20F98B5100499D0C /* engrave.txt in Resources */ = {isa = PBXBuildFile; fileRef = C199E23920F98B5000499D0C /* engrave.txt */; };
+		C199E23D20F98B5100499D0C /* epitaph.txt in Resources */ = {isa = PBXBuildFile; fileRef = C199E23A20F98B5000499D0C /* epitaph.txt */; };
+		C199E23E20F98B5100499D0C /* bogusmon.txt in Resources */ = {isa = PBXBuildFile; fileRef = C199E23B20F98B5000499D0C /* bogusmon.txt */; };
+		C199E23F20FA9C1E00499D0C /* epitaph in Resources */ = {isa = PBXBuildFile; fileRef = C199E22B20F98B3000499D0C /* epitaph */; };
+		C199E24020FA9C2200499D0C /* engrave in Resources */ = {isa = PBXBuildFile; fileRef = C199E22F20F98B3000499D0C /* engrave */; };
+		C199E24120FA9C2B00499D0C /* keyhelp in Resources */ = {isa = PBXBuildFile; fileRef = C199E22D20F98B3000499D0C /* keyhelp */; };
+		C199E24220FA9C2F00499D0C /* medusa-3.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22E20F98B3000499D0C /* medusa-3.lev */; };
+		C199E24320FA9C3100499D0C /* medusa-4.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22C20F98B3000499D0C /* medusa-4.lev */; };
+		C199E24420FA9C3400499D0C /* symbols in Resources */ = {isa = PBXBuildFile; fileRef = C199E23120F98B3000499D0C /* symbols */; };
+		C199E24520FA9C3700499D0C /* tribute in Resources */ = {isa = PBXBuildFile; fileRef = C199E23020F98B3000499D0C /* tribute */; };
+		C199E24620FA9C3B00499D0C /* bigrm-6.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22420F98AED00499D0C /* bigrm-6.lev */; };
+		C199E24720FA9C3E00499D0C /* bigrm-7.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22220F98AEC00499D0C /* bigrm-7.lev */; };
+		C199E24820FA9C4200499D0C /* bigrm-8.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22120F98AEC00499D0C /* bigrm-8.lev */; };
+		C199E24920FA9C4600499D0C /* bigrm-9.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22320F98AED00499D0C /* bigrm-9.lev */; };
+		C199E24A20FA9C4900499D0C /* bigrm-10.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22520F98AED00499D0C /* bigrm-10.lev */; };
+		C199E24B20FA9C5B00499D0C /* epitaph.txt in Resources */ = {isa = PBXBuildFile; fileRef = C199E23A20F98B5000499D0C /* epitaph.txt */; };
+		C199E24C20FA9C6000499D0C /* engrave.txt in Resources */ = {isa = PBXBuildFile; fileRef = C199E23920F98B5000499D0C /* engrave.txt */; };
+		C199E24D20FA9C6A00499D0C /* bogusmon in Resources */ = {isa = PBXBuildFile; fileRef = C1D5E2E2204C145F00D32EBB /* bogusmon */; };
 		C1A1DE292037D16000D4C8BA /* posixregex.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE282037D15F00D4C8BA /* posixregex.c */; };
 		C1A1DE2A2037D16000D4C8BA /* posixregex.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE282037D15F00D4C8BA /* posixregex.c */; };
 		C1A1DE2C2037D39800D4C8BA /* sys.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE2B2037D39800D4C8BA /* sys.c */; };
@@ -1100,6 +1130,21 @@
 		C12F9860202F60C900F296F6 /* iNetHack3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iNetHack3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12F9861202F60C900F296F6 /* iNetHack2 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iNetHack2 copy-Info.plist"; path = "/Users/doucej/Documents/iNetHack3/iNetHack2 copy-Info.plist"; sourceTree = "<absolute>"; };
 		C172677C204F936000428522 /* nethackmodern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nethackmodern.png; sourceTree = "<group>"; };
+		C199E22120F98AEC00499D0C /* bigrm-8.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-8.lev"; sourceTree = "<group>"; };
+		C199E22220F98AEC00499D0C /* bigrm-7.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-7.lev"; sourceTree = "<group>"; };
+		C199E22320F98AED00499D0C /* bigrm-9.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-9.lev"; sourceTree = "<group>"; };
+		C199E22420F98AED00499D0C /* bigrm-6.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-6.lev"; sourceTree = "<group>"; };
+		C199E22520F98AED00499D0C /* bigrm-10.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-10.lev"; sourceTree = "<group>"; };
+		C199E22B20F98B3000499D0C /* epitaph */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = epitaph; sourceTree = "<group>"; };
+		C199E22C20F98B3000499D0C /* medusa-4.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "medusa-4.lev"; sourceTree = "<group>"; };
+		C199E22D20F98B3000499D0C /* keyhelp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keyhelp; sourceTree = "<group>"; };
+		C199E22E20F98B3000499D0C /* medusa-3.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "medusa-3.lev"; sourceTree = "<group>"; };
+		C199E22F20F98B3000499D0C /* engrave */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = engrave; sourceTree = "<group>"; };
+		C199E23020F98B3000499D0C /* tribute */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tribute; sourceTree = "<group>"; };
+		C199E23120F98B3000499D0C /* symbols */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = symbols; sourceTree = "<group>"; };
+		C199E23920F98B5000499D0C /* engrave.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = engrave.txt; sourceTree = "<group>"; };
+		C199E23A20F98B5000499D0C /* epitaph.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = epitaph.txt; sourceTree = "<group>"; };
+		C199E23B20F98B5000499D0C /* bogusmon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bogusmon.txt; sourceTree = "<group>"; };
 		C1A1DE282037D15F00D4C8BA /* posixregex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = posixregex.c; path = nethack/sys/share/posixregex.c; sourceTree = "<group>"; };
 		C1A1DE2B2037D39800D4C8BA /* sys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys.c; path = nethack/src/sys.c; sourceTree = "<group>"; };
 		C1D5E2E2204C145F00D32EBB /* bogusmon */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bogusmon; sourceTree = "<group>"; };
@@ -1569,6 +1614,21 @@
 		43DD0A210FF4E0F700580249 /* dat */ = {
 			isa = PBXGroup;
 			children = (
+				C199E23B20F98B5000499D0C /* bogusmon.txt */,
+				C199E23920F98B5000499D0C /* engrave.txt */,
+				C199E23A20F98B5000499D0C /* epitaph.txt */,
+				C199E22F20F98B3000499D0C /* engrave */,
+				C199E22B20F98B3000499D0C /* epitaph */,
+				C199E22D20F98B3000499D0C /* keyhelp */,
+				C199E22E20F98B3000499D0C /* medusa-3.lev */,
+				C199E22C20F98B3000499D0C /* medusa-4.lev */,
+				C199E23120F98B3000499D0C /* symbols */,
+				C199E23020F98B3000499D0C /* tribute */,
+				C199E22420F98AED00499D0C /* bigrm-6.lev */,
+				C199E22220F98AEC00499D0C /* bigrm-7.lev */,
+				C199E22120F98AEC00499D0C /* bigrm-8.lev */,
+				C199E22320F98AED00499D0C /* bigrm-9.lev */,
+				C199E22520F98AED00499D0C /* bigrm-10.lev */,
 				43DD0A220FF4E0F700580249 /* air.lev */,
 				43DD0A230FF4E0F700580249 /* Arc-fila.lev */,
 				43DD0A240FF4E0F700580249 /* Arc-filb.lev */,
@@ -1873,6 +1933,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C199E23820F98B3100499D0C /* symbols in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				43DD07B20FF4C64100580249 /* MainView.xib in Resources */,
 				43DD0AC20FF4E0FC00580249 /* air.lev in Resources */,
@@ -1880,6 +1941,7 @@
 				43DD0AC40FF4E0FC00580249 /* Arc-filb.lev in Resources */,
 				43DD0AC50FF4E0FC00580249 /* Arc-goal.lev in Resources */,
 				FBB7FAA91A8C256D008F64AD /* nextstep.png in Resources */,
+				C199E23620F98B3100499D0C /* engrave in Resources */,
 				43DD0AC60FF4E0FC00580249 /* Arc-loca.lev in Resources */,
 				43DD0AC70FF4E0FC00580249 /* Arc-strt.lev in Resources */,
 				43DD0AC90FF4E0FC00580249 /* asmodeus.lev in Resources */,
@@ -1891,6 +1953,7 @@
 				43DD0ACF0FF4E0FC00580249 /* Bar-loca.lev in Resources */,
 				43DD0AD00FF4E0FC00580249 /* Bar-strt.lev in Resources */,
 				43DD0AD20FF4E0FC00580249 /* bigrm-1.lev in Resources */,
+				C199E23220F98B3100499D0C /* epitaph in Resources */,
 				43DD0AD30FF4E0FC00580249 /* bigrm-2.lev in Resources */,
 				43DD0AD40FF4E0FC00580249 /* bigrm-3.lev in Resources */,
 				43DD0AD50FF4E0FC00580249 /* bigrm-4.lev in Resources */,
@@ -1908,6 +1971,7 @@
 				43DD0AE30FF4E0FC00580249 /* dungeon in Resources */,
 				43DD0AE40FF4E0FC00580249 /* dungeon.def in Resources */,
 				43DD0AE50FF4E0FC00580249 /* dungeon.pdf in Resources */,
+				C199E23520F98B3100499D0C /* medusa-3.lev in Resources */,
 				43DD0AE60FF4E0FC00580249 /* earth.lev in Resources */,
 				43DD0AE80FF4E0FC00580249 /* fakewiz1.lev in Resources */,
 				43DD0AE90FF4E0FC00580249 /* fakewiz2.lev in Resources */,
@@ -1932,7 +1996,9 @@
 				43DD0B000FF4E0FC00580249 /* medusa-1.lev in Resources */,
 				43DD0B010FF4E0FC00580249 /* medusa-2.lev in Resources */,
 				43DD0B030FF4E0FC00580249 /* minefill.lev in Resources */,
+				C199E22620F98AED00499D0C /* bigrm-8.lev in Resources */,
 				43DD0B040FF4E0FC00580249 /* minend-1.lev in Resources */,
+				C199E22720F98AED00499D0C /* bigrm-7.lev in Resources */,
 				43DD0B050FF4E0FC00580249 /* minend-2.lev in Resources */,
 				43DD0B060FF4E0FC00580249 /* minend-3.lev in Resources */,
 				43DD0B080FF4E0FC00580249 /* minetn-1.lev in Resources */,
@@ -1951,6 +2017,7 @@
 				43DD0B160FF4E0FC00580249 /* options in Resources */,
 				43DD0B180FF4E0FC00580249 /* oracle.lev in Resources */,
 				FBA6C9DA1B47442C006C88B5 /* nevanda32.png in Resources */,
+				C199E23720F98B3100499D0C /* tribute in Resources */,
 				43DD0B190FF4E0FC00580249 /* oracles in Resources */,
 				43DD0B1A0FF4E0FC00580249 /* oracles.txt in Resources */,
 				43DD0B1B0FF4E0FC00580249 /* orcus.lev in Resources */,
@@ -1963,17 +2030,21 @@
 				43DD0B220FF4E0FC00580249 /* quest.dat in Resources */,
 				43DD0B230FF4E0FC00580249 /* quest.txt in Resources */,
 				43DD0B240FF4E0FC00580249 /* quest_levs in Resources */,
+				C199E23E20F98B5100499D0C /* bogusmon.txt in Resources */,
 				43DD0B250FF4E0FC00580249 /* Ran-fila.lev in Resources */,
 				43DD0B260FF4E0FC00580249 /* Ran-filb.lev in Resources */,
 				43DD0B270FF4E0FC00580249 /* Ran-goal.lev in Resources */,
 				43DD0B280FF4E0FC00580249 /* Ran-loca.lev in Resources */,
+				C199E22820F98AED00499D0C /* bigrm-9.lev in Resources */,
 				43DD0B290FF4E0FC00580249 /* Ran-strt.lev in Resources */,
 				C172677D204F936000428522 /* nethackmodern.png in Resources */,
 				43DD0B2B0FF4E0FC00580249 /* Rog-fila.lev in Resources */,
 				FB4307201A72A0D7003B7010 /* Images.xcassets in Resources */,
 				43DD0B2C0FF4E0FC00580249 /* Rog-filb.lev in Resources */,
+				C199E23C20F98B5100499D0C /* engrave.txt in Resources */,
 				43DD0B2D0FF4E0FC00580249 /* Rog-goal.lev in Resources */,
 				43DD0B2E0FF4E0FC00580249 /* Rog-loca.lev in Resources */,
+				C199E23420F98B3100499D0C /* keyhelp in Resources */,
 				43DD0B2F0FF4E0FC00580249 /* Rog-strt.lev in Resources */,
 				43DD0B310FF4E0FC00580249 /* rumors in Resources */,
 				43DD0B320FF4E0FC00580249 /* rumors.fal in Resources */,
@@ -1998,10 +2069,12 @@
 				43DD0B470FF4E0FC00580249 /* Tou-goal.lev in Resources */,
 				FBA6C9DB1B47442C006C88B5 /* nevanda32black.png in Resources */,
 				43DD0B480FF4E0FC00580249 /* Tou-loca.lev in Resources */,
+				C199E22920F98AED00499D0C /* bigrm-6.lev in Resources */,
 				43DD0B490FF4E0FC00580249 /* Tou-strt.lev in Resources */,
 				43DD0B4C0FF4E0FC00580249 /* tower1.lev in Resources */,
 				43DD0B4D0FF4E0FC00580249 /* tower2.lev in Resources */,
 				43DD0B4E0FF4E0FC00580249 /* tower3.lev in Resources */,
+				C199E22A20F98AED00499D0C /* bigrm-10.lev in Resources */,
 				FB64D9551A785ED80035BA74 /* Icon.png in Resources */,
 				43DD0B4F0FF4E0FC00580249 /* Val-fila.lev in Resources */,
 				43DD0B500FF4E0FC00580249 /* Val-filb.lev in Resources */,
@@ -2011,6 +2084,7 @@
 				43DD0B550FF4E0FC00580249 /* valley.lev in Resources */,
 				43DD0B560FF4E0FC00580249 /* water.lev in Resources */,
 				43DD0B570FF4E0FC00580249 /* Wiz-fila.lev in Resources */,
+				C199E23320F98B3100499D0C /* medusa-4.lev in Resources */,
 				43DD0B580FF4E0FC00580249 /* Wiz-filb.lev in Resources */,
 				43DD0B590FF4E0FC00580249 /* Wiz-goal.lev in Resources */,
 				43DD0B5A0FF4E0FC00580249 /* Wiz-loca.lev in Resources */,
@@ -2040,6 +2114,7 @@
 				43A103A910B5706E006DD634 /* chozo32.png in Resources */,
 				43A103AA10B5706E006DD634 /* chozo32b.png in Resources */,
 				43A103AB10B5706E006DD634 /* nhtiles.png in Resources */,
+				C199E23D20F98B5100499D0C /* epitaph.txt in Resources */,
 				43A103AC10B5706E006DD634 /* tiles32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2083,6 +2158,7 @@
 				C12F9733202F60C800F296F6 /* bigrm-2.lev in Resources */,
 				C12F9734202F60C800F296F6 /* bigrm-3.lev in Resources */,
 				C12F9735202F60C800F296F6 /* bigrm-4.lev in Resources */,
+				C199E24920FA9C4600499D0C /* bigrm-9.lev in Resources */,
 				C12F9736202F60C800F296F6 /* bigrm-5.lev in Resources */,
 				C12F9737202F60C800F296F6 /* bigroom.des in Resources */,
 				C12F9738202F60C800F296F6 /* castle.lev in Resources */,
@@ -2119,6 +2195,7 @@
 				C12F9757202F60C800F296F6 /* knox.lev in Resources */,
 				C12F9758202F60C800F296F6 /* license in Resources */,
 				C12F9759202F60C800F296F6 /* medusa-1.lev in Resources */,
+				C199E24620FA9C3B00499D0C /* bigrm-6.lev in Resources */,
 				C12F975A202F60C800F296F6 /* medusa-2.lev in Resources */,
 				C12F975B202F60C800F296F6 /* minefill.lev in Resources */,
 				C12F975C202F60C800F296F6 /* minend-1.lev in Resources */,
@@ -2127,11 +2204,14 @@
 				C12F975F202F60C800F296F6 /* minetn-1.lev in Resources */,
 				C12F9760202F60C800F296F6 /* minetn-2.lev in Resources */,
 				C12F9761202F60C800F296F6 /* minetn-3.lev in Resources */,
+				C199E24820FA9C4200499D0C /* bigrm-8.lev in Resources */,
 				C12F9762202F60C800F296F6 /* minetn-4.lev in Resources */,
+				C199E23F20FA9C1E00499D0C /* epitaph in Resources */,
 				C12F9763202F60C800F296F6 /* minetn-5.lev in Resources */,
 				C12F9764202F60C800F296F6 /* minetn-6.lev in Resources */,
 				C12F9765202F60C800F296F6 /* minetn-7.lev in Resources */,
 				C12F9766202F60C800F296F6 /* Mon-fila.lev in Resources */,
+				C199E24020FA9C2200499D0C /* engrave in Resources */,
 				C12F9767202F60C800F296F6 /* Mon-filb.lev in Resources */,
 				C12F9768202F60C800F296F6 /* Mon-goal.lev in Resources */,
 				C12F9769202F60C800F296F6 /* Mon-loca.lev in Resources */,
@@ -2145,6 +2225,7 @@
 				C12F9771202F60C800F296F6 /* orcus.lev in Resources */,
 				C12F9772202F60C800F296F6 /* Images-2.xcassets in Resources */,
 				C12F9773202F60C800F296F6 /* Pri-fila.lev in Resources */,
+				C199E24A20FA9C4900499D0C /* bigrm-10.lev in Resources */,
 				C12F9774202F60C800F296F6 /* Pri-filb.lev in Resources */,
 				C12F9775202F60C800F296F6 /* Pri-goal.lev in Resources */,
 				C12F9776202F60C800F296F6 /* Pri-loca.lev in Resources */,
@@ -2160,8 +2241,10 @@
 				C12F9780202F60C800F296F6 /* Rog-fila.lev in Resources */,
 				C12F9781202F60C800F296F6 /* Images.xcassets in Resources */,
 				C12F9782202F60C800F296F6 /* Rog-filb.lev in Resources */,
+				C199E24720FA9C3E00499D0C /* bigrm-7.lev in Resources */,
 				C12F9783202F60C800F296F6 /* Rog-goal.lev in Resources */,
 				C12F9784202F60C800F296F6 /* Rog-loca.lev in Resources */,
+				C199E24C20FA9C6000499D0C /* engrave.txt in Resources */,
 				C12F9785202F60C800F296F6 /* Rog-strt.lev in Resources */,
 				C12F9786202F60C800F296F6 /* rumors in Resources */,
 				C12F9787202F60C800F296F6 /* rumors.fal in Resources */,
@@ -2176,6 +2259,7 @@
 				C12F9790202F60C800F296F6 /* soko1-2.lev in Resources */,
 				C12F9791202F60C800F296F6 /* soko2-1.lev in Resources */,
 				C12F9792202F60C800F296F6 /* soko2-2.lev in Resources */,
+				C199E24D20FA9C6A00499D0C /* bogusmon in Resources */,
 				C12F9793202F60C800F296F6 /* soko3-1.lev in Resources */,
 				C12F9794202F60C800F296F6 /* soko3-2.lev in Resources */,
 				C12F9795202F60C800F296F6 /* soko4-1.lev in Resources */,
@@ -2185,6 +2269,7 @@
 				C12F9798202F60C800F296F6 /* Tou-fila.lev in Resources */,
 				C12F9799202F60C800F296F6 /* Tou-filb.lev in Resources */,
 				C12F979A202F60C800F296F6 /* Tou-goal.lev in Resources */,
+				C199E24120FA9C2B00499D0C /* keyhelp in Resources */,
 				C12F979B202F60C800F296F6 /* nevanda32black.png in Resources */,
 				C12F979C202F60C800F296F6 /* Tou-loca.lev in Resources */,
 				C12F979D202F60C800F296F6 /* Tou-strt.lev in Resources */,
@@ -2194,6 +2279,7 @@
 				C12F97A1202F60C800F296F6 /* Icon.png in Resources */,
 				C12F97A2202F60C800F296F6 /* Val-fila.lev in Resources */,
 				C12F97A3202F60C800F296F6 /* Val-filb.lev in Resources */,
+				C199E24B20FA9C5B00499D0C /* epitaph.txt in Resources */,
 				C12F97A4202F60C800F296F6 /* Val-goal.lev in Resources */,
 				C12F97A5202F60C800F296F6 /* Val-loca.lev in Resources */,
 				C12F97A6202F60C800F296F6 /* Val-strt.lev in Resources */,
@@ -2203,6 +2289,7 @@
 				C12F97AA202F60C800F296F6 /* Wiz-filb.lev in Resources */,
 				C12F97AB202F60C800F296F6 /* Wiz-goal.lev in Resources */,
 				C12F97AC202F60C800F296F6 /* Wiz-loca.lev in Resources */,
+				C199E24520FA9C3700499D0C /* tribute in Resources */,
 				C12F97AD202F60C800F296F6 /* Wiz-strt.lev in Resources */,
 				C12F97AE202F60C800F296F6 /* Wizard.des in Resources */,
 				C12F97AF202F60C800F296F6 /* wizard1.lev in Resources */,
@@ -2212,6 +2299,8 @@
 				C12F97B3202F60C800F296F6 /* wizhelp in Resources */,
 				C12F97B4202F60C800F296F6 /* MenuView.xib in Resources */,
 				C12F97B5202F60C800F296F6 /* NethackMenuView.xib in Resources */,
+				C199E24320FA9C3100499D0C /* medusa-4.lev in Resources */,
+				C199E24220FA9C2F00499D0C /* medusa-3.lev in Resources */,
 				C12F97B6202F60C800F296F6 /* TextInputView.xib in Resources */,
 				C12F97B7202F60C800F296F6 /* DirectionInputView.xib in Resources */,
 				C12F97B8202F60C800F296F6 /* MenuViewLeaf.xib in Resources */,
@@ -2227,6 +2316,7 @@
 				C12F97C2202F60C800F296F6 /* absurd32.png in Resources */,
 				C12F97C3202F60C800F296F6 /* chozo32.png in Resources */,
 				C12F97C4202F60C800F296F6 /* chozo32b.png in Resources */,
+				C199E24420FA9C3400499D0C /* symbols in Resources */,
 				C12F97C5202F60C800F296F6 /* nhtiles.png in Resources */,
 				C12F97C6202F60C800F296F6 /* tiles32.png in Resources */,
 			);

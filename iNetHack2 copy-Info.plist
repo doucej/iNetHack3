@@ -46,7 +46,7 @@
 	<key>UILaunchStoryboardName</key>
 	<string>MainView</string>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackTranslucent</string>
 	<key>UISupportedInterfaceOrientations</key>
