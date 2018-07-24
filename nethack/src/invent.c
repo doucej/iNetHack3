@@ -2242,6 +2242,12 @@ long *out_cnt;
     if (!flags.invlet_constant)
         reassign();
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
+#if !TARGET_OS_IPHONE
+        
     if (n == 1 && !iflags.force_invmenu) {
         /* when only one item of interest, use pline instead of menus;
            we actually use a fake message-line menu in order to allow
@@ -2272,7 +2278,8 @@ long *out_cnt;
              (((flags.sortloot == 'f') ? SORTLOOT_LOOT : SORTLOOT_INVLET)
               | (flags.sortpack ? SORTLOOT_PACK : 0)),
              FALSE);
-
+#endif
+    
     start_menu(win);
     any = zeroany;
     if (wizard && iflags.override_ID) {
