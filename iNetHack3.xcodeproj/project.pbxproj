@@ -392,7 +392,6 @@
 		C12F976B202F60C800F296F6 /* opthelp in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0A750FF4E0F700580249 /* opthelp */; };
 		C12F976C202F60C800F296F6 /* options in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0A760FF4E0F700580249 /* options */; };
 		C12F976D202F60C800F296F6 /* oracle.lev in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0A780FF4E0F700580249 /* oracle.lev */; };
-		C12F976E202F60C800F296F6 /* nevanda32.png in Resources */ = {isa = PBXBuildFile; fileRef = FBA6C9D81B47442C006C88B5 /* nevanda32.png */; };
 		C12F976F202F60C800F296F6 /* oracles in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0A790FF4E0F700580249 /* oracles */; };
 		C12F9770202F60C800F296F6 /* oracles.txt in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0A7A0FF4E0F700580249 /* oracles.txt */; };
 		C12F9771202F60C800F296F6 /* orcus.lev in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0A7B0FF4E0F700580249 /* orcus.lev */; };
@@ -460,7 +459,6 @@
 		C12F97AF202F60C800F296F6 /* wizard1.lev in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0ABD0FF4E0F700580249 /* wizard1.lev */; };
 		C12F97B0202F60C800F296F6 /* wizard2.lev in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0ABE0FF4E0F700580249 /* wizard2.lev */; };
 		C12F97B1202F60C800F296F6 /* wizard3.lev in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0ABF0FF4E0F700580249 /* wizard3.lev */; };
-		C12F97B2202F60C800F296F6 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = FB33C48A1A7F774A0020F638 /* dawnhack32.png */; };
 		C12F97B3202F60C800F296F6 /* wizhelp in Resources */ = {isa = PBXBuildFile; fileRef = 43DD0AC00FF4E0F700580249 /* wizhelp */; };
 		C12F97B4202F60C800F296F6 /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C103D20FF8D59C00DBD0EF /* MenuView.xib */; };
 		C12F97B5202F60C800F296F6 /* NethackMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C5AD920FFA772B004F67ED /* NethackMenuView.xib */; };
@@ -628,6 +626,10 @@
 		C12F9859202F60C900F296F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		C12F985A202F60C900F296F6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9194B2AD1032E48A009BDE61 /* QuartzCore.framework */; };
 		C12F985B202F60C900F296F6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F3397810BD4C6F0054E1A9 /* SystemConfiguration.framework */; };
+		C133BFE62108873800326B19 /* nevanda32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFE52108873700326B19 /* nevanda32.png */; };
+		C133BFE72108873800326B19 /* nevanda32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFE52108873700326B19 /* nevanda32.png */; };
+		C133BFEC210B386F00326B19 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFEB210B386E00326B19 /* dawnhack32.png */; };
+		C133BFED210B386F00326B19 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFEB210B386E00326B19 /* dawnhack32.png */; };
 		C172677D204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
 		C172677E204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
 		C199E22620F98AED00499D0C /* bigrm-8.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22120F98AEC00499D0C /* bigrm-8.lev */; };
@@ -665,10 +667,8 @@
 		C1A1DE2C2037D39800D4C8BA /* sys.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE2B2037D39800D4C8BA /* sys.c */; };
 		C1A1DE2D2037D39800D4C8BA /* sys.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1DE2B2037D39800D4C8BA /* sys.c */; };
 		C1D5E2E3204C145F00D32EBB /* bogusmon in Resources */ = {isa = PBXBuildFile; fileRef = C1D5E2E2204C145F00D32EBB /* bogusmon */; };
-		FB33C48B1A7F774A0020F638 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = FB33C48A1A7F774A0020F638 /* dawnhack32.png */; };
 		FB4307201A72A0D7003B7010 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB43071F1A72A0D6003B7010 /* Images.xcassets */; };
 		FB64D9551A785ED80035BA74 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FB64D9541A785ED80035BA74 /* Icon.png */; };
-		FBA6C9DA1B47442C006C88B5 /* nevanda32.png in Resources */ = {isa = PBXBuildFile; fileRef = FBA6C9D81B47442C006C88B5 /* nevanda32.png */; };
 		FBA6C9DB1B47442C006C88B5 /* nevanda32black.png in Resources */ = {isa = PBXBuildFile; fileRef = FBA6C9D91B47442C006C88B5 /* nevanda32black.png */; };
 		FBB7FAA51A893650008F64AD /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB7FAA41A89364F008F64AD /* Images-2.xcassets */; };
 		FBB7FAA91A8C256D008F64AD /* nextstep.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB7FAA81A8C256C008F64AD /* nextstep.png */; };
@@ -1129,6 +1129,8 @@
 		C12F9712202F5F9F00F296F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C12F9860202F60C900F296F6 /* iNetHack3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iNetHack3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12F9861202F60C900F296F6 /* iNetHack2 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iNetHack2 copy-Info.plist"; path = "/Users/doucej/Documents/iNetHack3/iNetHack2 copy-Info.plist"; sourceTree = "<absolute>"; };
+		C133BFE52108873700326B19 /* nevanda32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nevanda32.png; path = ../../../nevanda32.png; sourceTree = "<group>"; };
+		C133BFEB210B386E00326B19 /* dawnhack32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dawnhack32.png; sourceTree = "<group>"; };
 		C172677C204F936000428522 /* nethackmodern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nethackmodern.png; sourceTree = "<group>"; };
 		C199E22120F98AEC00499D0C /* bigrm-8.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-8.lev"; sourceTree = "<group>"; };
 		C199E22220F98AEC00499D0C /* bigrm-7.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-7.lev"; sourceTree = "<group>"; };
@@ -1148,10 +1150,8 @@
 		C1A1DE282037D15F00D4C8BA /* posixregex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = posixregex.c; path = nethack/sys/share/posixregex.c; sourceTree = "<group>"; };
 		C1A1DE2B2037D39800D4C8BA /* sys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys.c; path = nethack/src/sys.c; sourceTree = "<group>"; };
 		C1D5E2E2204C145F00D32EBB /* bogusmon */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bogusmon; sourceTree = "<group>"; };
-		FB33C48A1A7F774A0020F638 /* dawnhack32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dawnhack32.png; sourceTree = "<group>"; };
 		FB43071F1A72A0D6003B7010 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iNetHack2/Images.xcassets; sourceTree = "<group>"; };
 		FB64D9541A785ED80035BA74 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		FBA6C9D81B47442C006C88B5 /* nevanda32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nevanda32.png; sourceTree = "<group>"; };
 		FBA6C9D91B47442C006C88B5 /* nevanda32black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nevanda32black.png; sourceTree = "<group>"; };
 		FBB7FAA41A89364F008F64AD /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "iNetHack2/Images-2.xcassets"; sourceTree = "<group>"; };
 		FBB7FAA81A8C256C008F64AD /* nextstep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextstep.png; sourceTree = "<group>"; };
@@ -1350,9 +1350,9 @@
 			isa = PBXGroup;
 			children = (
 				C172677C204F936000428522 /* nethackmodern.png */,
-				FBA6C9D81B47442C006C88B5 /* nevanda32.png */,
+				C133BFE52108873700326B19 /* nevanda32.png */,
 				FBA6C9D91B47442C006C88B5 /* nevanda32black.png */,
-				FB33C48A1A7F774A0020F638 /* dawnhack32.png */,
+				C133BFEB210B386E00326B19 /* dawnhack32.png */,
 				43A103A310B5706E006DD634 /* absurd32.png */,
 				43A103A410B5706E006DD634 /* chozo32.png */,
 				43A103A510B5706E006DD634 /* chozo32b.png */,
@@ -1956,6 +1956,7 @@
 				C199E23220F98B3100499D0C /* epitaph in Resources */,
 				43DD0AD30FF4E0FC00580249 /* bigrm-2.lev in Resources */,
 				43DD0AD40FF4E0FC00580249 /* bigrm-3.lev in Resources */,
+				C133BFEC210B386F00326B19 /* dawnhack32.png in Resources */,
 				43DD0AD50FF4E0FC00580249 /* bigrm-4.lev in Resources */,
 				43DD0AD60FF4E0FC00580249 /* bigrm-5.lev in Resources */,
 				43DD0AD70FF4E0FC00580249 /* bigroom.des in Resources */,
@@ -2016,7 +2017,6 @@
 				43DD0B150FF4E0FC00580249 /* opthelp in Resources */,
 				43DD0B160FF4E0FC00580249 /* options in Resources */,
 				43DD0B180FF4E0FC00580249 /* oracle.lev in Resources */,
-				FBA6C9DA1B47442C006C88B5 /* nevanda32.png in Resources */,
 				C199E23720F98B3100499D0C /* tribute in Resources */,
 				43DD0B190FF4E0FC00580249 /* oracles in Resources */,
 				43DD0B1A0FF4E0FC00580249 /* oracles.txt in Resources */,
@@ -2063,6 +2063,7 @@
 				43DD0B400FF4E0FC00580249 /* soko3-2.lev in Resources */,
 				43DD0B410FF4E0FC00580249 /* soko4-1.lev in Resources */,
 				43DD0B420FF4E0FC00580249 /* soko4-2.lev in Resources */,
+				C133BFE62108873800326B19 /* nevanda32.png in Resources */,
 				43DD0B440FF4E0FC00580249 /* spec_levs in Resources */,
 				43DD0B450FF4E0FC00580249 /* Tou-fila.lev in Resources */,
 				43DD0B460FF4E0FC00580249 /* Tou-filb.lev in Resources */,
@@ -2093,7 +2094,6 @@
 				43DD0B5D0FF4E0FC00580249 /* wizard1.lev in Resources */,
 				43DD0B5E0FF4E0FC00580249 /* wizard2.lev in Resources */,
 				43DD0B5F0FF4E0FC00580249 /* wizard3.lev in Resources */,
-				FB33C48B1A7F774A0020F638 /* dawnhack32.png in Resources */,
 				43DD0B600FF4E0FC00580249 /* wizhelp in Resources */,
 				43C103D30FF8D59C00DBD0EF /* MenuView.xib in Resources */,
 				43C5AD930FFA772B004F67ED /* NethackMenuView.xib in Resources */,
@@ -2157,6 +2157,7 @@
 				C12F9732202F60C800F296F6 /* bigrm-1.lev in Resources */,
 				C12F9733202F60C800F296F6 /* bigrm-2.lev in Resources */,
 				C12F9734202F60C800F296F6 /* bigrm-3.lev in Resources */,
+				C133BFE72108873800326B19 /* nevanda32.png in Resources */,
 				C12F9735202F60C800F296F6 /* bigrm-4.lev in Resources */,
 				C199E24920FA9C4600499D0C /* bigrm-9.lev in Resources */,
 				C12F9736202F60C800F296F6 /* bigrm-5.lev in Resources */,
@@ -2181,6 +2182,7 @@
 				C12F9749202F60C800F296F6 /* Hea-fila.lev in Resources */,
 				C12F974A202F60C800F296F6 /* Hea-filb.lev in Resources */,
 				C12F974B202F60C800F296F6 /* Hea-goal.lev in Resources */,
+				C133BFED210B386F00326B19 /* dawnhack32.png in Resources */,
 				C12F974C202F60C800F296F6 /* Hea-loca.lev in Resources */,
 				C12F974D202F60C800F296F6 /* Hea-strt.lev in Resources */,
 				C12F974E202F60C800F296F6 /* help in Resources */,
@@ -2219,7 +2221,6 @@
 				C12F976B202F60C800F296F6 /* opthelp in Resources */,
 				C12F976C202F60C800F296F6 /* options in Resources */,
 				C12F976D202F60C800F296F6 /* oracle.lev in Resources */,
-				C12F976E202F60C800F296F6 /* nevanda32.png in Resources */,
 				C12F976F202F60C800F296F6 /* oracles in Resources */,
 				C12F9770202F60C800F296F6 /* oracles.txt in Resources */,
 				C12F9771202F60C800F296F6 /* orcus.lev in Resources */,
@@ -2295,7 +2296,6 @@
 				C12F97AF202F60C800F296F6 /* wizard1.lev in Resources */,
 				C12F97B0202F60C800F296F6 /* wizard2.lev in Resources */,
 				C12F97B1202F60C800F296F6 /* wizard3.lev in Resources */,
-				C12F97B2202F60C800F296F6 /* dawnhack32.png in Resources */,
 				C12F97B3202F60C800F296F6 /* wizhelp in Resources */,
 				C12F97B4202F60C800F296F6 /* MenuView.xib in Resources */,
 				C12F97B5202F60C800F296F6 /* NethackMenuView.xib in Resources */,
