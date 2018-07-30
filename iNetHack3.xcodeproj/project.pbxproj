@@ -29,7 +29,6 @@
 		43A103A910B5706E006DD634 /* chozo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A410B5706E006DD634 /* chozo32.png */; };
 		43A103AA10B5706E006DD634 /* chozo32b.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A510B5706E006DD634 /* chozo32b.png */; };
 		43A103AB10B5706E006DD634 /* nhtiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A610B5706E006DD634 /* nhtiles.png */; };
-		43A103AC10B5706E006DD634 /* tiles32.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A710B5706E006DD634 /* tiles32.png */; };
 		43A1879D100C9129001BDB88 /* Shortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1879C100C9129001BDB88 /* Shortcut.m */; };
 		43A187A8100C92DC001BDB88 /* ShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A187A7100C92DC001BDB88 /* ShortcutView.m */; };
 		43A7B06A10302D880083CE1B /* DMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A7B06910302D880083CE1B /* DMath.m */; };
@@ -478,7 +477,6 @@
 		C12F97C3202F60C800F296F6 /* chozo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A410B5706E006DD634 /* chozo32.png */; };
 		C12F97C4202F60C800F296F6 /* chozo32b.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A510B5706E006DD634 /* chozo32b.png */; };
 		C12F97C5202F60C800F296F6 /* nhtiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A610B5706E006DD634 /* nhtiles.png */; };
-		C12F97C6202F60C800F296F6 /* tiles32.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A103A710B5706E006DD634 /* tiles32.png */; };
 		C12F97C8202F60C800F296F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		C12F97C9202F60C800F296F6 /* iNethackAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iNethackAppDelegate.m */; };
 		C12F97CA202F60C800F296F6 /* allmain.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0DD020FE79DFE00B63ED3 /* allmain.c */; };
@@ -630,6 +628,8 @@
 		C133BFE72108873800326B19 /* nevanda32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFE52108873700326B19 /* nevanda32.png */; };
 		C133BFEC210B386F00326B19 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFEB210B386E00326B19 /* dawnhack32.png */; };
 		C133BFED210B386F00326B19 /* dawnhack32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFEB210B386E00326B19 /* dawnhack32.png */; };
+		C133BFF2210BA2FD00326B19 /* tiles32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFF1210BA2FC00326B19 /* tiles32.png */; };
+		C133BFF3210BA2FD00326B19 /* tiles32.png in Resources */ = {isa = PBXBuildFile; fileRef = C133BFF1210BA2FC00326B19 /* tiles32.png */; };
 		C172677D204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
 		C172677E204F936000428522 /* nethackmodern.png in Resources */ = {isa = PBXBuildFile; fileRef = C172677C204F936000428522 /* nethackmodern.png */; };
 		C199E22620F98AED00499D0C /* bigrm-8.lev in Resources */ = {isa = PBXBuildFile; fileRef = C199E22120F98AEC00499D0C /* bigrm-8.lev */; };
@@ -707,7 +707,6 @@
 		43A103A410B5706E006DD634 /* chozo32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chozo32.png; sourceTree = "<group>"; };
 		43A103A510B5706E006DD634 /* chozo32b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chozo32b.png; sourceTree = "<group>"; };
 		43A103A610B5706E006DD634 /* nhtiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nhtiles.png; sourceTree = "<group>"; };
-		43A103A710B5706E006DD634 /* tiles32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles32.png; sourceTree = "<group>"; };
 		43A1879B100C9129001BDB88 /* Shortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shortcut.h; sourceTree = "<group>"; };
 		43A1879C100C9129001BDB88 /* Shortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shortcut.m; sourceTree = "<group>"; };
 		43A187A6100C92DC001BDB88 /* ShortcutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortcutView.h; sourceTree = "<group>"; };
@@ -1131,6 +1130,7 @@
 		C12F9861202F60C900F296F6 /* iNetHack2 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iNetHack2 copy-Info.plist"; path = "/Users/doucej/Documents/iNetHack3/iNetHack2 copy-Info.plist"; sourceTree = "<absolute>"; };
 		C133BFE52108873700326B19 /* nevanda32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nevanda32.png; path = ../../../nevanda32.png; sourceTree = "<group>"; };
 		C133BFEB210B386E00326B19 /* dawnhack32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dawnhack32.png; sourceTree = "<group>"; };
+		C133BFF1210BA2FC00326B19 /* tiles32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles32.png; sourceTree = "<group>"; };
 		C172677C204F936000428522 /* nethackmodern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nethackmodern.png; sourceTree = "<group>"; };
 		C199E22120F98AEC00499D0C /* bigrm-8.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-8.lev"; sourceTree = "<group>"; };
 		C199E22220F98AEC00499D0C /* bigrm-7.lev */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bigrm-7.lev"; sourceTree = "<group>"; };
@@ -1352,13 +1352,13 @@
 				C172677C204F936000428522 /* nethackmodern.png */,
 				C133BFE52108873700326B19 /* nevanda32.png */,
 				FBA6C9D91B47442C006C88B5 /* nevanda32black.png */,
+				C133BFF1210BA2FC00326B19 /* tiles32.png */,
 				C133BFEB210B386E00326B19 /* dawnhack32.png */,
 				43A103A310B5706E006DD634 /* absurd32.png */,
 				43A103A410B5706E006DD634 /* chozo32.png */,
 				43A103A510B5706E006DD634 /* chozo32b.png */,
 				FBB7FAA81A8C256C008F64AD /* nextstep.png */,
 				43A103A610B5706E006DD634 /* nhtiles.png */,
-				43A103A710B5706E006DD634 /* tiles32.png */,
 				43A7B1C9103046EA0083CE1B /* petmark.png */,
 			);
 			path = Tilesets;
@@ -1987,6 +1987,7 @@
 				43DD0AF30FF4E0FC00580249 /* hh in Resources */,
 				43DD0AF40FF4E0FC00580249 /* history in Resources */,
 				43DD0AF50FF4E0FC00580249 /* juiblex.lev in Resources */,
+				C133BFF2210BA2FD00326B19 /* tiles32.png in Resources */,
 				43DD0AF60FF4E0FC00580249 /* Kni-fila.lev in Resources */,
 				43DD0AF70FF4E0FC00580249 /* Kni-filb.lev in Resources */,
 				43DD0AF80FF4E0FC00580249 /* Kni-goal.lev in Resources */,
@@ -2115,7 +2116,6 @@
 				43A103AA10B5706E006DD634 /* chozo32b.png in Resources */,
 				43A103AB10B5706E006DD634 /* nhtiles.png in Resources */,
 				C199E23D20F98B5100499D0C /* epitaph.txt in Resources */,
-				43A103AC10B5706E006DD634 /* tiles32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2263,6 +2263,7 @@
 				C199E24D20FA9C6A00499D0C /* bogusmon in Resources */,
 				C12F9793202F60C800F296F6 /* soko3-1.lev in Resources */,
 				C12F9794202F60C800F296F6 /* soko3-2.lev in Resources */,
+				C133BFF3210BA2FD00326B19 /* tiles32.png in Resources */,
 				C12F9795202F60C800F296F6 /* soko4-1.lev in Resources */,
 				C12F9796202F60C800F296F6 /* soko4-2.lev in Resources */,
 				C12F9797202F60C800F296F6 /* spec_levs in Resources */,
@@ -2318,7 +2319,6 @@
 				C12F97C4202F60C800F296F6 /* chozo32b.png in Resources */,
 				C199E24420FA9C3400499D0C /* symbols in Resources */,
 				C12F97C5202F60C800F296F6 /* nhtiles.png in Resources */,
-				C12F97C6202F60C800F296F6 /* tiles32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
