@@ -224,7 +224,9 @@ void iphone_askname() {
 			[lossyName getBytes:plname length:PL_NSIZ-1];
 			plname[lossyName.length] = 0;
 		}
-		NSCAssert1(plname[0], @"Failed to init plname from name '%@'", name);
+		//NSCAssert1(plname[0], @"Failed to init plname from name '%@'", name);
+        // jrd inethack3
+        strcpy(plname, "mobile user");
 	} else {
 		strcpy(plname, "wizard");
 	}

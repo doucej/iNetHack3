@@ -204,7 +204,7 @@
 /* note: "larger" is in comparison with 'record', the high-scores file
    (whose name can be overridden via #define in global.h if desired) */
 #define LOGFILE  "logfile"  /* larger file for debugging purposes */
-#define XLOGFILE "xlogfile" /* even larger logfile */
+/*#define XLOGFILE "xlogfile" /* even larger logfile */
 #define NEWS     "news"     /* the file containing the latest hack news */
 #define PANICLOG "paniclog" /* log of panic and impossible events */
 
