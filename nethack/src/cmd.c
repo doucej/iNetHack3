@@ -29,6 +29,7 @@ extern const char *enc_stat[]; /* encumbrance status from botl.c */
 extern boolean winiphone_autokick;
 extern boolean winiphone_travel;
 #endif
+#endif
 
 #define CMD_TRAVEL (char) 0x90
 #define CMD_CLICKLOOK (char) 0x8F
